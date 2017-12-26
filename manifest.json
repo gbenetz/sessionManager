@@ -1,0 +1,21 @@
+{
+	"manifest_version" : 2,
+	"name" : "Session manager",
+	"version" : "0.1.0",
+
+	"description" : "Manages Firefox sessions",
+
+	"icons" : {
+		"48" : "icons/session.svg"
+	},
+
+	"permissions" : [
+		"tabs"
+	],
+
+	"browser_action" : {
+		"default_icon" : "icons/session.svg",
+		"default_title" : "Session manager",
+		"default_popup" : "html/session.html"
+	}
+}
