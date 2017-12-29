@@ -4,15 +4,14 @@
  * type is a label that is applied to the class name
  * cmd is the type of command. This two parameters are used to create the class
  * of the new button in the form of 'type'-cmd-'cmd'
- * label is the label fo the button
+ * content is an HTMLElement to be used as the "label" of the button
  * Returns:
  * the newly created button
  */
-function createButton(type, cmd, label) {
+function createButton(type, cmd, content) {
 	var btn = document.createElement("button");
 	btn.className = type + "-cmd-" + cmd;
-	btn.setAttribute("style", "margin-left: 10px");
-	btn.appendChild(document.createTextNode(label));
+	btn.appendChild(content);
 	return btn;
 
 }
@@ -25,12 +24,22 @@ function createButton(type, cmd, label) {
  * the newly created div
  */
 function createSessionCmds(name) {
-	var cmds = document.createElement("div");
-	cmds.className = "commands"
+	var cmds, btn;
+	cmds = document.createElement("div");
+	cmds.className = "commands";
 	cmds.setAttribute("session", name);
-	cmds.appendChild(createButton("session", "start", "Avvia"));
-	cmds.appendChild(createButton("session", "edit", "Modifica"));
-	cmds.appendChild(createButton("session", "delete", "Elimina"));
+	btn = createButton("session",
+			   "start",
+			   document.createTextNode("Avvia"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "edit",
+			   document.createTextNode("Modifica"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "delete",
+			   document.createTextNode("Elimina"));
+	cmds.appendChild(btn);
 	return cmds;
 }
 
