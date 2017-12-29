@@ -73,17 +73,14 @@ function createArrow(type) {
  * the row
  */
 function createSessionRow(name) {
-	var row, arrows, text;
+	var row, empty, text;
 	row = document.createElement("div");
-	row.className = "row";
-	arrows = document.createElement("div");
-	arrows.className = "arrows-icon";
-	arrows.appendChild(createArrow("right"))
-	arrows.appendChild(createArrow("down"))
-	row.appendChild(arrows);
+	row.className = "session-row row";
+	empty = document.createElement("div");
+	empty.className = "empty";
+	row.appendChild(empty);
 	text = document.createElement("div");
 	text.className = "text";
-	text.setAttribute("style", "margin-left: 10px");
 	text.appendChild(document.createTextNode(name));
 	row.appendChild(text);
 	row.appendChild(createSessionCmds(name));
