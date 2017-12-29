@@ -174,3 +174,20 @@ function saveSession(ev) {
 function onError(error) {
 	console.log(`Error: ${error}`);
 }
+
+/**
+ * Retrieved data from the storage.local.get Promise.
+ * It sets up all the things to show the sessions
+ *
+ * data the data retrieved
+ */
+function onGot(data) {
+	console.log(data);
+	if (data.hasOwnProperty("sessions")) {
+		sessions = data.sessions;
+		for (let session of sessions) {
+			addSessionToPopup(session.name);
+		}
+	}
+}
+
