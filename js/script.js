@@ -1,3 +1,4 @@
+var sessions = [];
 /**
  * Creates a button
  *
