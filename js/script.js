@@ -66,6 +66,20 @@ function createSessionRow(name) {
 }
 
 /**
+ * Adds a row containing a session
+ *
+ * name is the name of the session
+ */
+function addSessionToPopup(name) {
+	var container = document.getElementById("sessions-container");
+	var newDiv = document.createElement("div");
+	newDiv.className = "container";
+	newDiv.setAttribute("session", name);
+	newDiv.appendChild(createSessionRow(name));
+	container.appendChild(newDiv);
+}
+
+/**
  * Shows a message in the message pane
  *
  * message is the text to show
