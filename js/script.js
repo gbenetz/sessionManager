@@ -100,6 +100,49 @@ function showMessage(message, timeout) {
 }
 
 /**
+ * Checks the tabs for priveleged urls and stores the unprivileged ones
+ * This function stores the tabs as a session object. This object has the
+ * following structure:
+ * 	name	String - the session name
+ * 	index	number - the index of the session in the sessions array
+ * 	tabs	Array of tabs they are objects having the following structure:
+ * 		title	String - the tab title
+ * 		url	String - the tab url
+ * 		index	number - the index of the tab
+ * This function also calls the one that show the new session row
+ *
+ * tabs is the tabs array
+ * name is the name of the session
+ */
+function checkAndStoreTabs(tabs, name) {
+	var session = {};
+	var filteredTabs;
+	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
+	session.name = name;
+	session.index = sessions.length;
+	filteredTabs = tabs.filter((tab) => {
+		var flag = re.test(tab.url);
+		if (flag)
+			console.log(`url ${tab.url} not permitted`);
+		return !flag;
+	});
+	if (filteredTabs.length == 0) {
+		showMessage("All tabs are privileged ones: session not saved");
+		return;
+	}
+
+	if (filteredTabs.length != tabs.length) {
+		showMessage("Some tabs omitted because their urls are privileged ones");
+	}
+	session.tabs = filteredTabs.map((tab, index) => {
+		return {title: tab.title, url: tab.url, index: index};
+	});
+	sessions.push(session);
+	browser.storage.local.set({sessions : sessions}).catch(onError);
+	addSessionToPopup(name);
+}
+
+/**
  * Print the error on the console
  *
  * error the error occurred
