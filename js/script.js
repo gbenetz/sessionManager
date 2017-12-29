@@ -32,6 +32,7 @@ function createSessionCmds(name) {
 	btn = createButton("session",
 			   "start",
 			   document.createTextNode("Avvia"));
+	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "edit",
