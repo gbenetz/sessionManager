@@ -167,6 +167,25 @@ function saveSession(ev) {
 }
 
 /**
+ * Starts a saved session
+ *
+ * ev is the event that triggered the session start
+ */
+function startSession(ev) {
+	var creating;
+	var name = ev.target.parentNode.getAttribute("session");
+	var session = sessions.find((element) => {
+		return element.name == name;
+	});
+	urls = {url : session.tabs.map(t => t.url)};
+	console.log(urls);
+	creating = browser.windows.create(urls);
+	creating.then((wi) => {
+		console.log(`Created window ${wi.id}`);
+	}).catch(onError);
+}
+
+/**
  * Print the error on the console
  *
  * error the error occurred
