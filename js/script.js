@@ -98,3 +98,11 @@ function showMessage(message, timeout) {
 	}, timeout * 1000);
 }
 
+/**
+ * Print the error on the console
+ *
+ * error the error occurred
+ */
+function onError(error) {
+	console.log(`Error: ${error}`);
+}
