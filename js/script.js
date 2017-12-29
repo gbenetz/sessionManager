@@ -143,6 +143,30 @@ function checkAndStoreTabs(tabs, name) {
 }
 
 /**
+ * Saves the current session
+ *
+ * ev the event that triggers the save action
+ */
+function saveSession(ev) {
+	var nameTextBox = document.getElementsByName("session-name")[0];
+	name = nameTextBox.value;
+	if (name == "") {
+		showMessage("The name is required");
+		return;
+	}
+	nameTextBox.value = "";
+	/*
+	 * TODO: implement overwrite 
+	 */
+	if (sessions.some(e => e.name == name)) {
+		showMessage(`Session ${name} already exists`);
+		return;
+	}
+	var tabs = browser.tabs.query({currentWindow: true});
+	tabs.then(tabs => checkAndStoreTabs(tabs, name)).catch(onError);
+}
+
+/**
  * Print the error on the console
  *
  * error the error occurred
