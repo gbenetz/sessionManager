@@ -44,28 +44,6 @@ function createSessionCmds(name) {
 }
 
 /**
- * Creates an img element containing the specified arrow image
- *
- * type is the type of the arrow ("down" or "right")
- * Returns:
- * the newly created element
- */
-function createArrow(type) {
-	var arrow = document.createElement("img");
-	arrow.setAttribute("src", "../images/arrow_" + type + ".svg");
-	arrow.setAttribute("width", "12px");
-	arrow.setAttribute("height", "12px");
-	arrow.setAttribute("src", "../images/arrow_" + type + ".svg");
-	arrow.className = "arrow-" + type;
-
-	if (type == "down") {
-		arrow.style.display = "none";
-	}
-
-	return arrow;
-}
-
-/**
  * It creates the row for the session
  *
  * name is the name of the session
