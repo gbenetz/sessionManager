@@ -128,12 +128,12 @@ function checkAndStoreTabs(tabs, name) {
 		return !flag;
 	});
 	if (filteredTabs.length == 0) {
-		showMessage("All tabs are privileged ones: session not saved");
+		showMessage("All tabs are privileged ones: session not saved", 10);
 		return;
 	}
 
 	if (filteredTabs.length != tabs.length) {
-		showMessage("Some tabs omitted because their urls are privileged ones");
+		showMessage("Some tabs omitted because their urls are privileged ones", 10);
 	}
 	session.tabs = filteredTabs.map((tab, index) => {
 		return {title: tab.title, url: tab.url, index: index};
@@ -152,7 +152,7 @@ function saveSession(ev) {
 	var nameTextBox = document.getElementsByName("session-name")[0];
 	name = nameTextBox.value;
 	if (name == "") {
-		showMessage("The name is required");
+		showMessage("The name is required", 10);
 		return;
 	}
 	nameTextBox.value = "";
@@ -160,7 +160,7 @@ function saveSession(ev) {
 	 * TODO: implement overwrite 
 	 */
 	if (sessions.some(e => e.name == name)) {
-		showMessage(`Session ${name} already exists`);
+		showMessage(`Session ${name} already exists`, 10);
 		return;
 	}
 	var tabs = browser.tabs.query({currentWindow: true});
