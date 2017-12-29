@@ -191,3 +191,19 @@ function onGot(data) {
 	}
 }
 
+/*
+ * Add an eventListener for the load event in order to setup things and show all
+ * the already saved session
+ */
+window.addEventListener("load", (e) => {
+	/*
+	 * Add the eventListener to the save button
+	 */
+	var saveBtn = document.getElementById("session-save");
+	saveBtn.addEventListener("click", saveSession);
+	/*
+	 * Load the already saved session (if any)
+	 */
+	browser.storage.local.get("sessions").then(onGot).catch(onError);
+});
+
