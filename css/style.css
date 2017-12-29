@@ -25,19 +25,10 @@ table {
 	align-items: center;
 }
 
-.arrow {
-	vertical-align: middle;
-	margin-left: 5px;
-}
-
 .empty {
 	min-width: 2%;
 }
 
-.session {
-	display: flex;
-	flex-direction: column;
-}
 
 .commands {
 	text-align: right;
