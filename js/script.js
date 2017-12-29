@@ -64,3 +64,23 @@ function createSessionRow(name) {
 	row.appendChild(createSessionCmds(name));
 	return row;
 }
+
+/**
+ * Shows a message in the message pane
+ *
+ * message is the text to show
+ * timeout is the number of seconds the message has to be shown
+ */
+function showMessage(message, timeout) {
+	var msg = document.getElementsByClassName("message")[0];
+	var text;
+	text = document.createTextNode(message);
+	msg.appendChild(text);
+	msg.style.color = "red";
+	window.setTimeout(() => {
+		while (msg.firstChild) {
+			msg.removeChild(msg.firstChild);
+		}
+	}, timeout * 1000);
+}
+
