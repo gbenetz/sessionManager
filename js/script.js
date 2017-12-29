@@ -49,13 +49,18 @@ function createSessionCmds(name) {
  * It creates the row for the session
  *
  * name is the name of the session
+ * oddRow is a boolean indicating if the row is an odd one
  * Returns:
  * the row
  */
-function createSessionRow(name) {
+function createSessionRow(name, oddRow) {
 	var row, empty, text;
 	row = document.createElement("div");
-	row.className = "session-row row";
+	row.className = "session-row row ";
+	if (oddRow)
+		row.className += "odd-row";
+	else
+		row.className += "even-row";
 	empty = document.createElement("div");
 	empty.className = "empty";
 	row.appendChild(empty);
@@ -75,9 +80,11 @@ function createSessionRow(name) {
 function addSessionToPopup(name) {
 	var container = document.getElementById("sessions-container");
 	var newDiv = document.createElement("div");
+	var containers = document.getElementsByClassName("container");
+	var odd = (containers.length & 1) == 1;
 	newDiv.className = "container";
 	newDiv.setAttribute("session", name);
-	newDiv.appendChild(createSessionRow(name));
+	newDiv.appendChild(createSessionRow(name, odd));
 	container.appendChild(newDiv);
 }
 
