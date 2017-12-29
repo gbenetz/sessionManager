@@ -9,6 +9,37 @@ table {
 	border-color: red;
 }*/
 
+}
+#session-save-cmds {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+}
+
+button {
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-left: 3px;
+	background-color: #4CAF50;
+	border-left-width: 6px;
+	border-right-width: 6px;
+	border-style: solid;
+	border-color: #4CAF50;
+	display: inline-block;
+	outline: 0;
+	padding: 8px 8px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	white-space: nowrap;
+}
+
+button:hover {
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
 .container {
 	border-style: solid;
 	border-width: thin;
