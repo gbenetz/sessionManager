@@ -50,16 +50,24 @@ function createSessionCmds(name) {
 	cmds.setAttribute("session", name);
 	btn = createButton("session",
 			   "start",
-			   document.createTextNode("Avvia"));
+			   createIcon("start", "24px", "24px"));
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "edit",
-			   document.createTextNode("Modifica"));
+			   createIcon("edit", "24px", "24px"));
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
-			   document.createTextNode("Elimina"));
+			   createIcon("delete", "24px", "24px"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "up",
+			   createIcon("up", "24px", "24px"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "down",
+			   createIcon("down", "24px", "24px"));
 	cmds.appendChild(btn);
 	return cmds;
 }
