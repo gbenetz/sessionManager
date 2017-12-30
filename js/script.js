@@ -4,17 +4,36 @@ var sessions = [];
  *
  * type is a label that is applied to the class name
  * cmd is the type of command. This two parameters are used to create the class
- * of the new button in the form of 'type'-cmd-'cmd'
+ * of the new button in the form of 'type'-cmd 'cmd'-btn
  * content is an HTMLElement to be used as the "label" of the button
  * Returns:
  * the newly created button
  */
 function createButton(type, cmd, content) {
 	var btn = document.createElement("button");
-	btn.className = type + "-cmd-" + cmd;
+	btn.className = type + "-cmd " + cmd + "-btn";
 	btn.appendChild(content);
 	return btn;
 
+}
+
+/**
+ * Create an img with the specified icon and size
+ *
+ * type		is the name of the icon. Must be one of the svg files in the
+ * 		images dir.
+ * 		type must be the name without the .svg suffix.
+ * width	width of the icon. Must be a string suitable for the width
+ * 		attribute.
+ * height	height of the icon. Must be a string suitable for the height
+ * 		attribute.
+ */
+function createIcon(type, width, height) {
+	var icon = document.createElement("img")
+	icon.setAttribute("src", "../images/" + type + ".svg");
+	icon.setAttribute("width", width);
+	icon.setAttribute("height", height);
+	return icon;
 }
 
 /**
@@ -31,16 +50,24 @@ function createSessionCmds(name) {
 	cmds.setAttribute("session", name);
 	btn = createButton("session",
 			   "start",
-			   document.createTextNode("Avvia"));
+			   createIcon("start", "24px", "24px"));
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "edit",
-			   document.createTextNode("Modifica"));
+			   createIcon("edit", "24px", "24px"));
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
-			   document.createTextNode("Elimina"));
+			   createIcon("delete", "24px", "24px"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "up",
+			   createIcon("up", "24px", "24px"));
+	cmds.appendChild(btn);
+	btn = createButton("session",
+			   "down",
+			   createIcon("down", "24px", "24px"));
 	cmds.appendChild(btn);
 	return cmds;
 }

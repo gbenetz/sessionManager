@@ -8,14 +8,12 @@ button {
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 3px;
-	background-color: #4CAF50;
-	border-left-width: 6px;
-	border-right-width: 6px;
+	border-left-width: 2px;
+	border-right-width: 2px;
 	border-style: solid;
-	border-color: #4CAF50;
 	display: inline-block;
 	outline: 0;
-	padding: 8px 8px;
+	padding: 2px 2px;
 	vertical-align: middle;
 	overflow: hidden;
 	text-decoration: none;
@@ -26,6 +24,36 @@ button {
 
 button:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#session-save {
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.start-btn {
+	background-color: #4CAF50;
+	border-color: #4CAF50;
+}
+
+.edit-btn {
+	background-color: #ffcc00;
+	border-color: #ffcc00;
+}
+
+.delete-btn {
+	background-color: #f00;
+	border-color: #f00;
+}
+
+.down-btn {
+	background-color: #39f;
+	border-color: #39f;
+}
+
+.up-btn {
+	background-color: #f96;
+	border-color: #f96;
 }
 
 .container {
