@@ -39,9 +39,8 @@ button:hover {
 	align-items: center;
 }
 
-.inner-row {
-	display: flex;
-	align-items: center;
+.odd-row {
+	background-color: #bfbfbf;
 }
 
 .empty {
