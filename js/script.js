@@ -4,14 +4,14 @@ var sessions = [];
  *
  * type is a label that is applied to the class name
  * cmd is the type of command. This two parameters are used to create the class
- * of the new button in the form of 'type'-cmd-'cmd'
+ * of the new button in the form of 'type'-cmd 'cmd'-btn
  * content is an HTMLElement to be used as the "label" of the button
  * Returns:
  * the newly created button
  */
 function createButton(type, cmd, content) {
 	var btn = document.createElement("button");
-	btn.className = type + "-cmd-" + cmd;
+	btn.className = type + "-cmd " + cmd + "-btn";
 	btn.appendChild(content);
 	return btn;
 
