@@ -162,6 +162,35 @@ function createGenericDialog(message, buttons) {
 }
 
 /**
+ * Shows the overwrite dialog.
+ * It creates all the required buttons with the adequate eventListeners.
+ *
+ * name is the name of the session that will be overwritten.
+ */
+function showOverwriteDialog(name) {
+	var buttons = [];
+	var ok = createButton("dialog",
+				"ok",
+				createIcon("yes", "22px", "22px"));
+	ok.addEventListener("click", (e) => {
+		retrieveTabs(name, true);
+		dialog.parentNode.removeChild(dialog);
+	});
+	var cancel = createButton("dialog",
+				  "cancel",
+				  createIcon("no", "22px", "22px"));
+				  //document.createTextNode("No"));
+	buttons[0] = ok;
+	buttons[1] = cancel;
+	var dialog = createGenericDialog(`Session "${name}" already exists: overwrite it?`, buttons);
+	cancel.addEventListener("click", (e) => {
+		dialog.parentNode.removeChild(dialog);
+	});
+	var h = document.getElementsByClassName("header")[0];
+	h.insertBefore(dialog, h.firstChild);
+}
+
+/**
  * Helper function that retrieve all the tabs from the browser.
  * It is also in charge to handle the promise returned by the tabs.query method.
  *
