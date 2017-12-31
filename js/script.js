@@ -135,6 +135,113 @@ function showMessage(message, timeout) {
 }
 
 /**
+ * Creates a generic dialog with a message and some buttons
+ *
+ * message is the message to show
+ * buttons is an array of buttons to be added to the dialog
+ *
+ * Returns:
+ * the newly created dialog
+ */
+function createGenericDialog(message, buttons) {
+	var dialog = document.createElement("dialog");
+	dialog.setAttribute("open", "");
+	dialog.id = "dialog";
+	var div = document.createElement("div");
+	div.className = "text";
+	div.appendChild(document.createTextNode(message));
+	dialog.appendChild(div);
+	div = document.createElement("div");
+	div.className = "dialog-commands";
+	for (let btn of buttons) {
+		div.appendChild(btn);
+	}
+
+	dialog.appendChild(div);
+	return dialog;
+}
+
+/**
+ * Disables all the buttons not included in the dialog.
+ *
+ * Returns:
+ * An array containing all the buttons that was already disabled when this
+ * function was called
+ */
+function disableAllNonDialogButtons() {
+	var btns = document.getElementsByTagName("button");
+	var alreadyDisabled = [];
+	for (let btn of btns) {
+		if (btn.className.includes("dialog-cmd"))
+			continue;
+		if (btn.hasAttribute("disabled")) {
+			alreadyDisabled.push(btn);
+		} else {
+			btn.setAttribute("disabled", "");
+		}
+	}
+	return alreadyDisabled;
+}
+
+/**
+ * Re-enables all the buttons except the ones specified.
+ *
+ * except is an array of buttons that the function will not enable
+ */
+function enableAllNonDialogButtons(except) {
+	var btns = document.getElementsByTagName("button");
+	for (let btn of btns) {
+		if (!except.includes(btn))
+			btn.removeAttribute("disabled");
+	}
+}
+
+/**
+ * Shows the overwrite dialog.
+ * It creates all the required buttons with the adequate eventListeners.
+ *
+ * name is the name of the session that will be overwritten.
+ */
+function showOverwriteDialog(name) {
+	var alreadyDisabled = disableAllNonDialogButtons();
+	var buttons = [];
+	var ok = createButton("dialog",
+				"ok",
+				createIcon("yes", "22px", "22px"));
+	ok.addEventListener("click", (e) => {
+		retrieveTabs(name, true);
+		enableAllNonDialogButtons(alreadyDisabled);
+		dialog.parentNode.removeChild(dialog);
+	});
+	var cancel = createButton("dialog",
+				  "cancel",
+				  createIcon("no", "22px", "22px"));
+				  //document.createTextNode("No"));
+	buttons[0] = ok;
+	buttons[1] = cancel;
+	var dialog = createGenericDialog(`Session "${name}" already exists: overwrite it?`, buttons);
+	cancel.addEventListener("click", (e) => {
+		enableAllNonDialogButtons(alreadyDisabled);
+		dialog.parentNode.removeChild(dialog);
+	});
+	var h = document.getElementsByClassName("header")[0];
+	h.insertBefore(dialog, h.firstChild);
+}
+
+/**
+ * Helper function that retrieve all the tabs from the browser.
+ * It is also in charge to handle the promise returned by the tabs.query method.
+ *
+ * session is the session name
+ * overwriteSession is a boolean indicting if the session must be overwritten.
+ */
+function retrieveTabs(session, overwriteSession) {
+	var querying = browser.tabs.query({currentWindow: true});
+	querying.then(tabs => checkAndStoreTabs(tabs, session, overwriteSession))
+		.catch(onError);
+}
+
+/**
  * Checks the tabs for priveleged urls and stores the unprivileged ones
  * This function stores the tabs as a session object. This object has the
  * following structure:
@@ -148,8 +255,10 @@ function showMessage(message, timeout) {
  *
  * tabs is the tabs array
  * name is the name of the session
+ * overwrite is a boolean indicating that the session named name already exists
+ * 	     and it must be overwritten
  */
-function checkAndStoreTabs(tabs, name) {
+function checkAndStoreTabs(tabs, name, overwrite) {
 	var session = {};
 	var filteredTabs;
 	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
@@ -172,9 +281,15 @@ function checkAndStoreTabs(tabs, name) {
 	session.tabs = filteredTabs.map((tab, index) => {
 		return {title: tab.title, url: tab.url, index: index};
 	});
-	sessions.push(session);
+	if (!overwrite) {
+		sessions.push(session);
+		addSessionToPopup(name);
+	} else {
+		var index = sessions.findIndex(e => e.name == name);
+		sessions[index] = session;
+	}
+
 	browser.storage.local.set({sessions : sessions}).catch(onError);
-	addSessionToPopup(name);
 }
 
 /**
@@ -190,15 +305,11 @@ function saveSession(ev) {
 		return;
 	}
 	nameTextBox.value = "";
-	/*
-	 * TODO: implement overwrite 
-	 */
 	if (sessions.some(e => e.name == name)) {
-		showMessage(`Session ${name} already exists`, 10);
+		showOverwriteDialog(name);
 		return;
 	}
-	var tabs = browser.tabs.query({currentWindow: true});
-	tabs.then(tabs => checkAndStoreTabs(tabs, name)).catch(onError);
+	retrieveTabs(name, false);
 }
 
 /**
