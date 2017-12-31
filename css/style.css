@@ -109,6 +109,10 @@ button:disabled:hover {
 	border-color: #F00;
 	background-color: #F00;
 }
+
+.icon {
+	vertical-align: middle;
+}
 /*.text {
 	position: relative;
 	top: -20px;
