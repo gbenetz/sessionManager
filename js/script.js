@@ -162,6 +162,28 @@ function createGenericDialog(message, buttons) {
 }
 
 /**
+ * Disables all the buttons not included in the dialog.
+ *
+ * Returns:
+ * An array containing all the buttons that was already disabled when this
+ * function was called
+ */
+function disableAllNonDialogButtons() {
+	var btns = document.getElementsByTagName("button");
+	var alreadyDisabled = [];
+	for (let btn of btns) {
+		if (btn.className.includes("dialog-cmd"))
+			continue;
+		if (btn.hasAttribute("disabled")) {
+			alreadyDisabled.push(btn);
+		} else {
+			btn.setAttribute("disabled", "");
+		}
+	}
+	return alreadyDisabled;
+}
+
+/**
  * Shows the overwrite dialog.
  * It creates all the required buttons with the adequate eventListeners.
  *
