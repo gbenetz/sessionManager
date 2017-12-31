@@ -33,6 +33,7 @@ function createIcon(type, width, height) {
 	icon.setAttribute("src", "../images/" + type + ".svg");
 	icon.setAttribute("width", width);
 	icon.setAttribute("height", height);
+	icon.className = "icon";
 	return icon;
 }
 
