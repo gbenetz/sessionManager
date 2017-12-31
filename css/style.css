@@ -69,7 +69,6 @@ button:disabled:hover {
 .container {
 	border-style: solid;
 	border-width: thin;
-	background-color: #bfbfbf;
 }
 
 .row {
@@ -79,6 +78,10 @@ button:disabled:hover {
 
 .odd-row {
 	background-color: #bfbfbf;
+}
+
+.even-row {
+	background-color: #f2f2f2;
 }
 
 .empty {
