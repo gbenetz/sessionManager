@@ -184,6 +184,19 @@ function disableAllNonDialogButtons() {
 }
 
 /**
+ * Re-enables all the buttons except the ones specified.
+ *
+ * except is an array of buttons that the function will not enable
+ */
+function enableAllNonDialogButtons(except) {
+	var btns = document.getElementsByTagName("button");
+	for (let btn of btns) {
+		if (!except.includes(btn))
+			btn.removeAttribute("disabled");
+	}
+}
+
+/**
  * Shows the overwrite dialog.
  * It creates all the required buttons with the adequate eventListeners.
  *
