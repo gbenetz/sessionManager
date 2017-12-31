@@ -26,6 +26,16 @@ button:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+
+button:disabled {
+	background-color: #999;
+	border-color: #999;
+}
+
+button:disabled:hover {
+	box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
 #session-save {
 	border-color: #4CAF50;
 	background-color: #4CAF50;
