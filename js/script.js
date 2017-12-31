@@ -203,12 +203,14 @@ function enableAllNonDialogButtons(except) {
  * name is the name of the session that will be overwritten.
  */
 function showOverwriteDialog(name) {
+	var alreadyDisabled = disableAllNonDialogButtons();
 	var buttons = [];
 	var ok = createButton("dialog",
 				"ok",
 				createIcon("yes", "22px", "22px"));
 	ok.addEventListener("click", (e) => {
 		retrieveTabs(name, true);
+		enableAllNonDialogButtons(alreadyDisabled);
 		dialog.parentNode.removeChild(dialog);
 	});
 	var cancel = createButton("dialog",
@@ -219,6 +221,7 @@ function showOverwriteDialog(name) {
 	buttons[1] = cancel;
 	var dialog = createGenericDialog(`Session "${name}" already exists: overwrite it?`, buttons);
 	cancel.addEventListener("click", (e) => {
+		enableAllNonDialogButtons(alreadyDisabled);
 		dialog.parentNode.removeChild(dialog);
 	});
 	var h = document.getElementsByClassName("header")[0];
