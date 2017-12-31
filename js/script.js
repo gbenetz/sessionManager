@@ -148,8 +148,10 @@ function showMessage(message, timeout) {
  *
  * tabs is the tabs array
  * name is the name of the session
+ * overwrite is a boolean indicating that the session named name already exists
+ * 	     and it must be overwritten
  */
-function checkAndStoreTabs(tabs, name) {
+function checkAndStoreTabs(tabs, name, overwrite) {
 	var session = {};
 	var filteredTabs;
 	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
@@ -172,9 +174,15 @@ function checkAndStoreTabs(tabs, name) {
 	session.tabs = filteredTabs.map((tab, index) => {
 		return {title: tab.title, url: tab.url, index: index};
 	});
-	sessions.push(session);
+	if (!overwrite) {
+		sessions.push(session);
+		addSessionToPopup(name);
+	} else {
+		var index = sessions.findIndex(e => e.name == name);
+		sessions[index] = session;
+	}
+
 	browser.storage.local.set({sessions : sessions}).catch(onError);
-	addSessionToPopup(name);
 }
 
 /**
@@ -198,7 +206,7 @@ function saveSession(ev) {
 		return;
 	}
 	var tabs = browser.tabs.query({currentWindow: true});
-	tabs.then(tabs => checkAndStoreTabs(tabs, name)).catch(onError);
+	tabs.then(tabs => checkAndStoreTabs(tabs, name, false)).catch(onError);
 }
 
 /**
