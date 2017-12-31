@@ -81,6 +81,24 @@ button:hover {
 	flex-grow: 1;
 }
 
+#dialog {
+	padding: 3px;
+	text-align: center;
+	border-width: 2px;
+}
+
+.ok-btn {
+	margin-left: 0px;
+	margin-right: 5px;
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.cancel-btn {
+	margin-left: 5px;
+	border-color: #F00;
+	background-color: #F00;
+}
 /*.text {
 	position: relative;
 	top: -20px;
