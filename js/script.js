@@ -267,11 +267,8 @@ function saveSession(ev) {
 		return;
 	}
 	nameTextBox.value = "";
-	/*
-	 * TODO: implement overwrite 
-	 */
 	if (sessions.some(e => e.name == name)) {
-		showMessage(`Session ${name} already exists`, 10);
+		showOverwriteDialog(name);
 		return;
 	}
 	retrieveTabs(name, false);
