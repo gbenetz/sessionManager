@@ -135,6 +135,46 @@ function showMessage(message, timeout) {
 }
 
 /**
+ * Creates a generic dialog with a message and some buttons
+ *
+ * message is the message to show
+ * buttons is an array of buttons to be added to the dialog
+ *
+ * Returns:
+ * the newly created dialog
+ */
+function createGenericDialog(message, buttons) {
+	var dialog = document.createElement("dialog");
+	dialog.setAttribute("open", "");
+	dialog.id = "dialog";
+	var div = document.createElement("div");
+	div.className = "text";
+	div.appendChild(document.createTextNode(message));
+	dialog.appendChild(div);
+	div = document.createElement("div");
+	div.className = "dialog-commands";
+	for (let btn of buttons) {
+		div.appendChild(btn);
+	}
+
+	dialog.appendChild(div);
+	return dialog;
+}
+
+/**
+ * Helper function that retrieve all the tabs from the browser.
+ * It is also in charge to handle the promise returned by the tabs.query method.
+ *
+ * session is the session name
+ * overwriteSession is a boolean indicting if the session must be overwritten.
+ */
+function retrieveTabs(session, overwriteSession) {
+	var querying = browser.tabs.query({currentWindow: true});
+	querying.then(tabs => checkAndStoreTabs(tabs, session, overwriteSession))
+		.catch(onError);
+}
+
+/**
  * Checks the tabs for priveleged urls and stores the unprivileged ones
  * This function stores the tabs as a session object. This object has the
  * following structure:
@@ -205,8 +245,7 @@ function saveSession(ev) {
 		showMessage(`Session ${name} already exists`, 10);
 		return;
 	}
-	var tabs = browser.tabs.query({currentWindow: true});
-	tabs.then(tabs => checkAndStoreTabs(tabs, name, false)).catch(onError);
+	retrieveTabs(name, false);
 }
 
 /**
