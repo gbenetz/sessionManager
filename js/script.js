@@ -105,14 +105,15 @@ function createSessionRow(name, oddRow) {
  *
  * name is the name of the session
  */
-function addSessionToPopup(name) {
+function addSessionToPopup(session) {
 	var container = document.getElementById("sessions-container");
 	var newDiv = document.createElement("div");
 	var containers = document.getElementsByClassName("container");
 	var odd = (containers.length & 1) == 1;
 	newDiv.className = "container";
-	newDiv.setAttribute("session", name);
-	newDiv.appendChild(createSessionRow(name, odd));
+	newDiv.setAttribute("session", session.name);
+	newDiv.setAttribute("index", session.index);
+	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
 }
 
@@ -284,7 +285,7 @@ function checkAndStoreTabs(tabs, name, overwrite) {
 	});
 	if (!overwrite) {
 		sessions.push(session);
-		addSessionToPopup(name);
+		addSessionToPopup(session);
 	} else {
 		var index = sessions.findIndex(e => e.name == name);
 		sessions[index] = session;
@@ -352,7 +353,7 @@ function onGot(data) {
 	if (data.hasOwnProperty("sessions")) {
 		sessions = data.sessions;
 		for (let session of sessions) {
-			addSessionToPopup(session.name);
+			addSessionToPopup(session);
 		}
 	}
 }
