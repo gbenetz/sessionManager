@@ -62,14 +62,6 @@ function createSessionCmds(name) {
 			   "delete",
 			   createIcon("delete", "24px", "24px"));
 	cmds.appendChild(btn);
-	btn = createButton("session",
-			   "up",
-			   createIcon("up", "24px", "24px"));
-	cmds.appendChild(btn);
-	btn = createButton("session",
-			   "down",
-			   createIcon("down", "24px", "24px"));
-	cmds.appendChild(btn);
 	return cmds;
 }
 
