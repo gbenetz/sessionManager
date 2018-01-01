@@ -179,6 +179,10 @@ function addSessionToPopup(session) {
 	newDiv.className = "container";
 	newDiv.setAttribute("session", session.name);
 	newDiv.setAttribute("index", session.index);
+	newDiv.setAttribute("draggable", "true");
+	newDiv.addEventListener("dragstart", drag);
+	newDiv.addEventListener("dragover", allowDrop);
+	newDiv.addEventListener("drop", drop);
 	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
 }
