@@ -62,14 +62,6 @@ function createSessionCmds(name) {
 			   "delete",
 			   createIcon("delete", "24px", "24px"));
 	cmds.appendChild(btn);
-	btn = createButton("session",
-			   "up",
-			   createIcon("up", "24px", "24px"));
-	cmds.appendChild(btn);
-	btn = createButton("session",
-			   "down",
-			   createIcon("down", "24px", "24px"));
-	cmds.appendChild(btn);
 	return cmds;
 }
 
@@ -101,18 +93,89 @@ function createSessionRow(name, oddRow) {
 }
 
 /**
+ * Event handler that allows the drop of an object on the target
+ */
+function allowDrop(ev) {
+	ev.preventDefault();
+}
+
+/**
+ * Event handler that manages the daragging of a session row
+ */
+function drag(ev) {
+	ev.dataTransfer.setData("index", ev.target.getAttribute("index"));
+}
+
+/**
+ * Event handler that manages the dropping of a session row on another.
+ * It manages also the sessions indexes.
+ */
+function drop(ev) {
+	ev.preventDefault();
+	var indexDrag = Number.parseInt(ev.dataTransfer.getData("index"), 10);
+	var indexDrop, dropped = ev.target;
+
+	while (dropped.className != "container")
+		dropped = dropped.parentElement;
+
+	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
+	var divs = document.getElementsByClassName("container");
+	var dragged;
+	var session = sessions[indexDrag];
+	sessions.splice(indexDrag, 1);
+	sessions.splice(indexDrop, 0, session);
+	sessions.forEach((el, index) => {
+		el.index = index;
+	});
+	console.log(sessions);
+
+	var container = document.getElementById("sessions-container");
+	for (let div of divs) {
+		var index = Number.parseInt(div.getAttribute("index"), 10);
+		if (index == indexDrag) {
+			dragged = div;
+			div.setAttribute("index", indexDrop);
+		} else if (index == indexDrop + 1) {
+			dropped = div;
+		} else if (index > indexDrag && index <= indexDrop) {
+			div.setAttribute("index", index - 1);
+		} else {
+			continue; // nothing to do with this div
+		}
+		var cls = div.firstChild.className;
+		var newIndex = Number.parseInt(div.getAttribute("index"), 10);
+		if ((newIndex & 1) == 0)
+			div.firstChild.className = cls.replace("odd", "even");
+		else
+			div.firstChild.className = cls.replace("even", "odd");
+
+	}
+	if (indexDrop == sessions.length - 1)
+		container.appendChild(dragged);
+	else
+		container.insertBefore(dragged, dropped);
+	browser.storage.local.set({sessions : sessions}).catch(onError);
+}
+
+
+/**
  * Adds a row containing a session
  *
  * name is the name of the session
  */
-function addSessionToPopup(name) {
+function addSessionToPopup(session) {
 	var container = document.getElementById("sessions-container");
 	var newDiv = document.createElement("div");
 	var containers = document.getElementsByClassName("container");
 	var odd = (containers.length & 1) == 1;
 	newDiv.className = "container";
-	newDiv.setAttribute("session", name);
-	newDiv.appendChild(createSessionRow(name, odd));
+	newDiv.setAttribute("session", session.name);
+	newDiv.setAttribute("index", session.index);
+	newDiv.setAttribute("draggable", "true");
+	newDiv.addEventListener("dragstart", drag);
+	newDiv.addEventListener("dragover", allowDrop);
+	newDiv.addEventListener("drop", drop);
+	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
 }
 
@@ -284,7 +347,7 @@ function checkAndStoreTabs(tabs, name, overwrite) {
 	});
 	if (!overwrite) {
 		sessions.push(session);
-		addSessionToPopup(name);
+		addSessionToPopup(session);
 	} else {
 		var index = sessions.findIndex(e => e.name == name);
 		sessions[index] = session;
@@ -352,7 +415,7 @@ function onGot(data) {
 	if (data.hasOwnProperty("sessions")) {
 		sessions = data.sessions;
 		for (let session of sessions) {
-			addSessionToPopup(session.name);
+			addSessionToPopup(session);
 		}
 	}
 }
