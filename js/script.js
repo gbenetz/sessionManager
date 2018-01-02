@@ -192,14 +192,16 @@ function addSessionToPopup(session) {
  */
 function showMessage(message, timeout) {
 	var msg = document.getElementsByClassName("message")[0];
-	var text;
-	text = document.createTextNode(message);
-	msg.appendChild(text);
-	msg.style.color = "red";
+	var div = document.createElement("div");
+	div.className = "text";
+	div.style.color = "red";
+	div.style.borderBottom = "thin solid black";
+	//div.style.borderBottomColor = "solid";
+	var text = document.createTextNode(message);
+	div.appendChild(text);
+	msg.appendChild(div);
 	window.setTimeout(() => {
-		while (msg.firstChild) {
-			msg.removeChild(msg.firstChild);
-		}
+		msg.removeChild(div);
 	}, timeout * 1000);
 }
 

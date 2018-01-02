@@ -115,3 +115,9 @@ button:disabled:hover {
 .icon {
 	vertical-align: middle;
 }
+
+.message {
+	display: flex;
+	flex-direction: column-reverse;
+
+}
