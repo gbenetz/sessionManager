@@ -115,8 +115,9 @@ button:disabled:hover {
 .icon {
 	vertical-align: middle;
 }
-/*.text {
-	position: relative;
-	top: -20px;
-	left: 30px;
-}*/
+
+.message {
+	display: flex;
+	flex-direction: column-reverse;
+
+}

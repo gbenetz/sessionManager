@@ -6,13 +6,15 @@ var sessions = [];
  * cmd is the type of command. This two parameters are used to create the class
  * of the new button in the form of 'type'-cmd 'cmd'-btn
  * content is an HTMLElement to be used as the "label" of the button
+ * tooltip is the button tooltip text
  * Returns:
  * the newly created button
  */
-function createButton(type, cmd, content) {
+function createButton(type, cmd, content, tooltip) {
 	var btn = document.createElement("button");
 	btn.className = type + "-cmd " + cmd + "-btn";
 	btn.appendChild(content);
+	btn.title = tooltip;
 	return btn;
 
 }
@@ -51,16 +53,19 @@ function createSessionCmds(name) {
 	cmds.setAttribute("session", name);
 	btn = createButton("session",
 			   "start",
-			   createIcon("start", "24px", "24px"));
+			   createIcon("start", "24px", "24px"),
+			   "Start the session");
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "edit",
-			   createIcon("edit", "24px", "24px"));
+			   createIcon("edit", "24px", "24px"),
+			   "Edit the session");
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
-			   createIcon("delete", "24px", "24px"));
+			   createIcon("delete", "24px", "24px"),
+			   "Delete the session");
 	cmds.appendChild(btn);
 	return cmds;
 }
@@ -187,14 +192,16 @@ function addSessionToPopup(session) {
  */
 function showMessage(message, timeout) {
 	var msg = document.getElementsByClassName("message")[0];
-	var text;
-	text = document.createTextNode(message);
-	msg.appendChild(text);
-	msg.style.color = "red";
+	var div = document.createElement("div");
+	div.className = "text";
+	div.style.color = "red";
+	div.style.borderBottom = "thin solid black";
+	//div.style.borderBottomColor = "solid";
+	var text = document.createTextNode(message);
+	div.appendChild(text);
+	msg.appendChild(div);
 	window.setTimeout(() => {
-		while (msg.firstChild) {
-			msg.removeChild(msg.firstChild);
-		}
+		msg.removeChild(div);
 	}, timeout * 1000);
 }
 
@@ -271,7 +278,8 @@ function showOverwriteDialog(name) {
 	var buttons = [];
 	var ok = createButton("dialog",
 				"ok",
-				createIcon("yes", "22px", "22px"));
+				createIcon("yes", "22px", "22px"),
+				"Yes");
 	ok.addEventListener("click", (e) => {
 		retrieveTabs(name, true);
 		enableAllNonDialogButtons(alreadyDisabled);
@@ -279,8 +287,8 @@ function showOverwriteDialog(name) {
 	});
 	var cancel = createButton("dialog",
 				  "cancel",
-				  createIcon("no", "22px", "22px"));
-				  //document.createTextNode("No"));
+				  createIcon("no", "22px", "22px"),
+				  "No");
 	buttons[0] = ok;
 	buttons[1] = cancel;
 	var dialog = createGenericDialog(`Session "${name}" already exists: overwrite it?`, buttons);
@@ -418,6 +426,16 @@ function onGot(data) {
 			addSessionToPopup(session);
 		}
 	}
+	handleVisualThings();
+
+/**
+ * Put here all the code to handle visual stuff after the sessions data are
+ * loaded in the popup
+ */
+function handleVisualThings() {
+	var message = document.getElementsByClassName("message")[0];
+	var maxWidth = document.body.clientWidth;
+	message.style.maxWidth = (maxWidth + 1).toString() + "px";
 }
 
 /*
