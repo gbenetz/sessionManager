@@ -426,6 +426,15 @@ function onGot(data) {
 			addSessionToPopup(session);
 		}
 	}
+
+/**
+ * Put here all the code to handle visual stuff after the sessions data are
+ * loaded in the popup
+ */
+function handleVisualThings() {
+	var message = document.getElementsByClassName("message")[0];
+	var maxWidth = document.body.clientWidth;
+	message.style.maxWidth = (maxWidth + 1).toString() + "px";
 }
 
 /*
