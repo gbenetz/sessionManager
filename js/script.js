@@ -449,6 +449,8 @@ window.addEventListener("load", (e) => {
 	 */
 	var saveBtn = document.getElementById("session-save");
 	saveBtn.addEventListener("click", saveSession);
+	var exportBtn = document.getElementById("export-cmd");
+	exportBtn.addEventListener("click", exportData);
 	/*
 	 * Load the already saved session (if any)
 	 */
