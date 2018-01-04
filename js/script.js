@@ -61,6 +61,7 @@ function createSessionCmds(name) {
 			   "edit",
 			   createIcon("edit", "24px", "24px"),
 			   "Edit the session");
+	btn.setAttribute("disabled", "");
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
