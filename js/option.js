@@ -44,6 +44,96 @@ function exportData(ev) {
 	.catch(onError);
 }
 
+/**
+ * Checks if the argument has the correct format and the data in it is valid
+ *
+ * tab the tab object to check
+ *
+ * Returns:
+ * true is tab has the correct format and data. false otherwise.
+ */
+function checkTab(tab) {
+	if (tab.hasOwnProperty("title") &&
+		tab.hasOwnProperty("url") &&
+		tab.hasOwnProperty("index")) {
+		var re = /^https?:\/\//;
+		if (re.test(tab.url)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Chacks if an array of tabs has the correct format and data.
+ * Also sort the argument in ascending order of index and then fix the index
+ * value.
+ *
+ * tabs the tab array to check
+ *
+ * Returns:
+ * the fixed array on null if the array has invalid data
+ */
+function checkTabs(tabs) {
+	for (var i = 0; i < tabs.length; i++) {
+		var tab = tabs[i];
+		if (!checkTab(tab))
+			return null;
+	}
+	tabs = tabs.sort((a, b) => a.index - b.index);
+	for (var i = 0; i < tabs.length; i++) {
+		tabs[i].index = i;
+	}
+	return tabs;
+}
+
+/**
+ * Checks if a session object has correct format and data
+ * It also fixes the tabs array
+ *
+ * session the object to check
+ *
+ * Returns
+ * the fixed session object or null if the object has invalid data
+ */
+function checkSession(session) {
+	if (session.hasOwnProperty("name") &&
+		session.hasOwnProperty("tabs") &&
+		session.hasOwnProperty("index")) {
+			if (session.tabs instanceof Array) {
+				var tabs = checkTabs(session.tabs);
+				if (tabs != null) {
+					session.tabs = tabs;
+					return session;
+				}
+			}
+	}
+	return null;
+}
+
+/**
+ * Checks if a session array has correct format and data
+ * It also fixes the tabs array of all the elements
+ *
+ * sessions the array to check
+ *
+ * Returns
+ * the fixed session array or null if the array has invalid data
+ */
+function checkSessions(sessionArray) {
+	for (var i = 0; i < sessionArray.length; i++) {
+		var session = checkSession(sessionArray[i]);
+		if (session == null)
+			return null;
+		sessionArray[i] = session;
+	}
+	sessionArray = sessionArray.sort((a, b) => a.index - b.index);
+	for (var i = 0; i < sessionArray.length; i++) {
+		sessionArray[i].index = i;
+	}
+	return sessionArray;
+}
+
 /*
  * Add an eventListener for the load event in order to setup things and show all
  * the already saved session
