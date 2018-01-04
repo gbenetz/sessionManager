@@ -35,7 +35,8 @@ function exportData(ev) {
 	var url = window.URL.createObjectURL(new Blob([sJson]));
 	var obj = {
 		url: url,
-		filename: "sessions.json"
+		filename: "sessions.json",
+		saveAs: true
 	};
 	var downloading = browser.downloads.download(obj);
 	downloading.then((id) => {
