@@ -427,6 +427,7 @@ function onGot(data) {
 		}
 	}
 	handleVisualThings();
+}
 
 /**
  * Put here all the code to handle visual stuff after the sessions data are
