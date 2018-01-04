@@ -154,6 +154,18 @@ function onFileLoad(ev) {
 	}
 }
 
+/**
+ * Event handler used to manage the selection of a file.
+ */
+function onChange(ev) {
+	var fileCh = ev.target;
+	console.log(fileCh.files[0]);
+	var reader = new FileReader();
+	reader.onload = onFileLoad;
+	reader.readAsText(fileCh.files[0]);
+	fileCh.value = "";
+}
+
 /*
  * Add an eventListener for the load event in order to setup things and show all
  * the already saved session
