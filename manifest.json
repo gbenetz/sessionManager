@@ -15,6 +15,10 @@
 		"downloads"
 	],
 
+	"options_ui" : {
+		"page" : "html/option.html"
+	},
+
 	"browser_action" : {
 		"default_icon" : "icons/session.svg",
 		"default_title" : "Session manager",
