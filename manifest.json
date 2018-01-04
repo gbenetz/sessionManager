@@ -11,8 +11,13 @@
 
 	"permissions" : [
 		"tabs",
-		"storage"
+		"storage",
+		"downloads"
 	],
+
+	"options_ui" : {
+		"page" : "html/option.html"
+	},
 
 	"browser_action" : {
 		"default_icon" : "icons/session.svg",

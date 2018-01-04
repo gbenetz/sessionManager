@@ -448,6 +448,11 @@ window.addEventListener("load", (e) => {
 	 */
 	var saveBtn = document.getElementById("session-save");
 	saveBtn.addEventListener("click", saveSession);
+	var settingsBtn = document.getElementById("settings-cmd");
+	settingsBtn.addEventListener("click", (ev) => {
+		var opening = browser.runtime.openOptionsPage();
+		opening.then(() => {}).catch(onError);
+	});
 	/*
 	 * Load the already saved session (if any)
 	 */
