@@ -167,12 +167,13 @@ function onChange(ev) {
 }
 
 /*
- * Add an eventListener for the load event in order to setup things and show all
- * the already saved session
+ * Add an eventListener for the load event in order to setup things
  */
 window.addEventListener("load", (e) => {
 	var exportBtn = document.getElementById("export-cmd");
 	exportBtn.addEventListener("click", exportData);
+	var importBtn = document.getElementById("import-cmd");
+	importBtn.addEventListener("change", onChange);
 	/*
 	 * Load the already saved session (if any)
 	 */
