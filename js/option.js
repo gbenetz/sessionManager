@@ -160,6 +160,7 @@ function checkSessions(sessionArray) {
 function onFileLoad(ev) {
 	console.log(ev.target.result);
 	var imported;
+	var msg = document.getElementById("import-msg");
 	try {
 		imported = JSON.parse(ev.target.result);
 		imported = checkSessions(imported);
@@ -168,9 +169,20 @@ function onFileLoad(ev) {
 		}
 		sessions = imported;
 		browser.storage.local.set({sessions : sessions}).catch(onError);
+		showMessage(msg, "Data imported successfully", "black", 10);
 			
 	} catch (e) {
 		onError(e);
+		if (e instanceof TypeError)
+			showMessage(msg,
+				"Unable to import data: invalid format",
+				"red",
+				10);
+		else if (e instanceof SyntaxError)
+			showMessage(msg,
+				"Unable to import data: the file is not a valid JSON file",
+				"red",
+				10);
 	}
 }
 
