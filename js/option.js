@@ -134,6 +134,26 @@ function checkSessions(sessionArray) {
 	return sessionArray;
 }
 
+/**
+ * Event handler used to get data when the file read operation is ended. 
+ */
+function onFileLoad(ev) {
+	console.log(ev.target.result);
+	var imported;
+	try {
+		imported = JSON.parse(ev.target.result);
+		imported = checkSessions(imported);
+		if (imported == null) {
+			throw TypeError("The imported object has an incorrect format");
+		}
+		sessions = imported;
+		browser.storage.local.set({sessions : sessions}).catch(onError);
+			
+	} catch (e) {
+		onError(e);
+	}
+}
+
 /*
  * Add an eventListener for the load event in order to setup things and show all
  * the already saved session
