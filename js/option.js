@@ -10,6 +10,25 @@ function onError(error) {
 }
 
 /**
+ * Shows a message in the specified message pane with the specified color
+ *
+ * div the message pane to use
+ * message is the text to show
+ * color the color of the message
+ * timeout is the number of seconds the message has to be shown
+ */
+function showMessage(div, message, color, timeout) {
+	var text;
+	text = document.createElement("p");
+	text.appendChild(document.createTextNode(message));
+	text.style.color = color;
+	div.appendChild(text);
+	window.setTimeout(() => {
+		div.removeChild(text);
+	}, timeout * 1000);
+}
+
+/**
  * Retries data from the storage.local.get Promise.
  *
  * data the data retrieved
