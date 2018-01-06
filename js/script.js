@@ -405,6 +405,42 @@ function startSession(ev) {
 }
 
 /**
+ * Deletes a session
+ *
+ * ev is the event that triggered the session start
+ */
+function deleteSession(ev) {
+	var name = ev.target.parentNode.getAttribute("session");
+	var index = sessions.findIndex((element) => {
+		return element.name == name;
+	});
+	var cont = document.getElementById("sessions-container");
+	var containers = document.getElementsByClassName("container");
+	var toDel;
+	for (let c of containers) {
+		var ind = Number.parseInt(c.getAttribute("index"));
+		if (c.getAttribute("session") == name) {
+			toDel = c;
+		}
+		if (ind > index) {
+			c.setAttribute("index", ind - 1);
+			var fChild = c.firstChild;
+			var cls = fChild.className;
+			if (((ind - 1) & 1) == 0)
+				fChild.className = cls.replace("odd", "even");
+			else
+				fChild.className = cls.replace("even", "odd");
+		}
+	}
+	cont.removeChild(toDel);
+	sessions.splice(index, 1);
+	sessions.forEach((el, i) => {
+		el.index = i;
+	});
+	browser.storage.local.set({sessions : sessions}).catch(onError);
+}
+
+/**
  * Print the error on the console
  *
  * error the error occurred
