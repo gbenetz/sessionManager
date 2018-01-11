@@ -5,6 +5,12 @@
 
 	"description" : "Manages Firefox sessions",
 
+	"applications" : {
+		"gecko" : {
+			"id" : "sessionManager@example.org"
+		}
+	},
+
 	"icons" : {
 		"48" : "icons/session.svg"
 	},
