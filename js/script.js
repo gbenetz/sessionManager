@@ -128,6 +128,9 @@ function drop(ev) {
 		dropped = dropped.parentElement;
 
 	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
+	if (indexDrag == indexDrop)
+		return;
+
 	var divs = document.getElementsByClassName("container");
 	var dragged;
 	var session = sessions[indexDrag];
