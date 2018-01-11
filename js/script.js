@@ -68,7 +68,7 @@ function createSessionCmds(name) {
 			   createIcon("delete", "24px", "24px"),
 			   "Delete the session");
 	btn.addEventListener("click", (e) => {
-		deleteSession(name);
+		showDeleteDialog(name);
 	});
 	cmds.appendChild(btn);
 	return cmds;
