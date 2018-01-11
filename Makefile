@@ -13,7 +13,12 @@ MAN = manifest.json
 ICO = $(wildcard icons/*)
 IMG = $(wildcard images/*)
 
+.PHONY: all clean
+
 all: $(PKG)
 
 $(PKG): $(MAN) $(HTML) $(JS) $(CSS) $(ICO) $(IMG)
 	$(ZIP) -u $(PKG) $^
+
+clean:
+	rm -rf $(PKG)
