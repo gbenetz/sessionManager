@@ -408,6 +408,39 @@ function startSession(ev) {
 }
 
 /**
+ * Shows the delete dialog.
+ * It creates all the required buttons with the adequate eventListeners.
+ *
+ * name is the name of the session that will be deleted.
+ */
+function showDeleteDialog(name) {
+	var alreadyDisabled = disableAllNonDialogButtons();
+	var buttons = [];
+	var ok = createButton("dialog",
+				"ok",
+				createIcon("yes", "22px", "22px"),
+				"Yes");
+	ok.addEventListener("click", (e) => {
+		deleteSession(name);
+		enableAllNonDialogButtons(alreadyDisabled);
+		dialog.parentNode.removeChild(dialog);
+	});
+	var cancel = createButton("dialog",
+				  "cancel",
+				  createIcon("no", "22px", "22px"),
+				  "No");
+	buttons[0] = ok;
+	buttons[1] = cancel;
+	var dialog = createGenericDialog(`Do you really want to delete session "${name}"?`, buttons);
+	cancel.addEventListener("click", (e) => {
+		enableAllNonDialogButtons(alreadyDisabled);
+		dialog.parentNode.removeChild(dialog);
+	});
+	var h = document.getElementsByClassName("header")[0];
+	h.insertBefore(dialog, h.firstChild);
+}
+
+/**
  * Deletes a session
  *
  * name the name of the session to delete
