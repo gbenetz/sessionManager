@@ -67,7 +67,9 @@ function createSessionCmds(name) {
 			   "delete",
 			   createIcon("delete", "24px", "24px"),
 			   "Delete the session");
-	btn.addEventListener("click", deleteSession);
+	btn.addEventListener("click", (e) => {
+		deleteSession(name);
+	});
 	cmds.appendChild(btn);
 	return cmds;
 }
@@ -408,10 +410,9 @@ function startSession(ev) {
 /**
  * Deletes a session
  *
- * ev is the event that triggered the session start
+ * name the name of the session to delete
  */
-function deleteSession(ev) {
-	var name = ev.target.parentNode.getAttribute("session");
+function deleteSession(name) {
 	var index = sessions.findIndex((element) => {
 		return element.name == name;
 	});
