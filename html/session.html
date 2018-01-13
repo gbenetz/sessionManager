@@ -1,3 +1,9 @@
+<!--
+   - Author: Guido Benetti guido.benetti01@gmail.com
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,12 +18,21 @@
 				<div id=session-save-cmds>
 					Name:&nbsp;
 					<input type="text" name="session-name">
-					<button id="session-save">Salva</button>
+					<button id="session-save" title="Save current session">
+						<img src="../images/save.svg" width="24px" height="24px">
+					</button>
 				</div>
 			</div>
-			<div class="message"></div>
 		</div>
 		<div id="sessions-container">
+		</div>
+		<div class=footer>
+			<div class="message"></div>
+			<div id=footer-cmds>
+				<button id="settings-cmd" title="Settings page">
+					<img src="../images/settings.svg" class="icon" width="24px" height="24px">
+				</button>
+			</div>
 		</div>
 	</body>
 </html>

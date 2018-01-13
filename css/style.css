@@ -1,15 +1,9 @@
 /*
-table {
-	border-style: solid;
-	border-color: red;
-}
-*/
-/*div {
-	border-style: solid;
-	border-color: red;
-}*/
-
-}
+ * Author: Guido Benetti guido.benetti01@gmail.com
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 #session-save-cmds {
 	display: flex;
 	align-items: center;
@@ -20,14 +14,12 @@ button {
 	padding-left: 0px;
 	padding-right: 0px;
 	margin-left: 3px;
-	background-color: #4CAF50;
-	border-left-width: 6px;
-	border-right-width: 6px;
+	border-left-width: 2px;
+	border-right-width: 2px;
 	border-style: solid;
-	border-color: #4CAF50;
 	display: inline-block;
 	outline: 0;
-	padding: 8px 8px;
+	padding: 2px 2px;
 	vertical-align: middle;
 	overflow: hidden;
 	text-decoration: none;
@@ -40,10 +32,49 @@ button:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+
+button:disabled {
+	background-color: #999;
+	border-color: #999;
+}
+
+button:disabled:hover {
+	box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+#session-save {
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.start-btn {
+	background-color: #4CAF50;
+	border-color: #4CAF50;
+}
+
+.edit-btn {
+	background-color: #ffcc00;
+	border-color: #ffcc00;
+}
+
+.delete-btn {
+	background-color: #f00;
+	border-color: #f00;
+}
+
+.down-btn {
+	background-color: #39f;
+	border-color: #39f;
+}
+
+.up-btn {
+	background-color: #f96;
+	border-color: #f96;
+}
+
 .container {
 	border-style: solid;
 	border-width: thin;
-	background-color: #bfbfbf;
 }
 
 .row {
@@ -51,22 +82,48 @@ button:hover {
 	align-items: center;
 }
 
-.inner-row {
-	display: flex;
-	align-items: center;
+.odd-row {
+	background-color: #bfbfbf;
+}
+
+.even-row {
+	background-color: #f2f2f2;
 }
 
 .empty {
 	min-width: 2%;
 }
 
-
 .commands {
 	text-align: right;
 	flex-grow: 1;
 }
-/*.text {
-	position: relative;
-	top: -20px;
-	left: 30px;
-}*/
+
+#dialog {
+	padding: 3px;
+	text-align: center;
+	border-width: 2px;
+}
+
+.ok-btn {
+	margin-left: 0px;
+	margin-right: 5px;
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.cancel-btn {
+	margin-left: 5px;
+	border-color: #F00;
+	background-color: #F00;
+}
+
+.icon {
+	vertical-align: middle;
+}
+
+.message {
+	display: flex;
+	flex-direction: column-reverse;
+
+}
