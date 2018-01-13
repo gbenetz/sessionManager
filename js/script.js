@@ -153,12 +153,21 @@ function drop(ev) {
 		if (index == indexDrag) {
 			dragged = div;
 			div.setAttribute("index", indexDrop);
-		} else if (index == indexDrop + 1) {
-			dropped = div;
-		} else if (index > indexDrag && index <= indexDrop) {
-			div.setAttribute("index", index - 1);
 		} else {
-			continue; // nothing to do with this div
+			if (indexDrop > indexDrag) {
+				if (index == indexDrop + 1) {
+					dropped = div;
+				} else if (index > indexDrag &&
+					   index <= indexDrop) {
+					div.setAttribute("index", index - 1);
+				} else
+					continue;
+			} else {
+				if (index >= indexDrop && index < indexDrag) {
+					div.setAttribute("index", index + 1);
+				} else
+					continue;
+			}
 		}
 		var cls = div.firstChild.className;
 		var newIndex = Number.parseInt(div.getAttribute("index"), 10);
