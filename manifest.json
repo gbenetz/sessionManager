@@ -1,9 +1,15 @@
 {
 	"manifest_version" : 2,
 	"name" : "Session manager",
-	"version" : "0.1.0",
+	"version" : "0.5.0",
 
 	"description" : "Manages Firefox sessions",
+
+	"applications" : {
+		"gecko" : {
+			"id" : "sessionManager@example.org"
+		}
+	},
 
 	"icons" : {
 		"48" : "icons/session.svg"

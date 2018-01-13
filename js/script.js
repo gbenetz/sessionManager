@@ -1,3 +1,9 @@
+/*
+ * Author: Guido Benetti guido.benetti01@gmail.com
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 var sessions = [];
 /**
  * Creates a button
@@ -57,12 +63,12 @@ function createSessionCmds(name) {
 			   "Start the session");
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
-	btn = createButton("session",
-			   "edit",
-			   createIcon("edit", "24px", "24px"),
-			   "Edit the session");
-	btn.setAttribute("disabled", "");
-	cmds.appendChild(btn);
+	//btn = createButton("session",
+	//		   "edit",
+	//		   createIcon("edit", "24px", "24px"),
+	//		   "Edit the session");
+	//btn.setAttribute("disabled", "");
+	//cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
 			   createIcon("delete", "24px", "24px"),
@@ -128,6 +134,9 @@ function drop(ev) {
 		dropped = dropped.parentElement;
 
 	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
+	if (indexDrag == indexDrop)
+		return;
+
 	var divs = document.getElementsByClassName("container");
 	var dragged;
 	var session = sessions[indexDrag];
