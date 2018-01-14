@@ -56,7 +56,7 @@ function onGot(data) {
  * file named sessions.json in the download directory
  */
 function exportData(ev) {
-	var sJson = window.JSON.stringify(sessions);
+	var sJson = window.JSON.stringify(sessions, null, '\t');
 	var url = window.URL.createObjectURL(new Blob([sJson]));
 	var obj = {
 		url: url,
@@ -219,4 +219,22 @@ window.addEventListener("load", (e) => {
 		.then(onGot)
 		.catch(onError)
 });
+
+/*
+ * Listener for changes in the storage area
+ */
+function onStorageChange(changes, area) {
+	if (area != "local")
+		return;
+
+	var changedItems = Object.keys(changes);
+
+	for (var item of changedItems) {
+		if (item == "sessions") {
+			sessions = changes[item].newValue;
+		}
+	}
+}
+
+browser.storage.onChanged.addListener(onStorageChange);
 
