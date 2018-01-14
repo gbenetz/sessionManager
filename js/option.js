@@ -56,7 +56,7 @@ function onGot(data) {
  * file named sessions.json in the download directory
  */
 function exportData(ev) {
-	var sJson = window.JSON.stringify(sessions);
+	var sJson = window.JSON.stringify(sessions, null, '\t');
 	var url = window.URL.createObjectURL(new Blob([sJson]));
 	var obj = {
 		url: url,
