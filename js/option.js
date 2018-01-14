@@ -220,3 +220,21 @@ window.addEventListener("load", (e) => {
 		.catch(onError)
 });
 
+/*
+ * Listener for changes in the storage area
+ */
+function onStorageChange(changes, area) {
+	if (area != "local")
+		return;
+
+	var changedItems = Object.keys(changes);
+
+	for (var item of changedItems) {
+		if (item == "sessions") {
+			sessions = changes[item].newValue;
+		}
+	}
+}
+
+browser.storage.onChanged.addListener(onStorageChange);
+
