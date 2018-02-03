@@ -7,7 +7,8 @@
 
 	"applications" : {
 		"gecko" : {
-			"id" : "sessionManager@example.org"
+			"id" : "sessionManager@example.org",
+			"update_url" : "https://github.com/gbenetz/sessionManager/releases/download/update/update.json"
 		}
 	},
 
