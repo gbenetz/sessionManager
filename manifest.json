@@ -26,6 +26,7 @@
 	},
 
 	"browser_action" : {
+		"browser_style" : true,
 		"default_icon" : "icons/session.svg",
 		"default_title" : "Session manager",
 		"default_popup" : "html/session.html"
