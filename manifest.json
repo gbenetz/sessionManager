@@ -1,13 +1,14 @@
 {
 	"manifest_version" : 2,
 	"name" : "Session manager",
-	"version" : "0.5.3",
+	"version" : "0.6.0",
 
 	"description" : "Manages Firefox sessions",
 
 	"applications" : {
 		"gecko" : {
-			"id" : "sessionManager@example.org"
+			"id" : "sessionManager@example.org",
+			"update_url" : "https://github.com/gbenetz/sessionManager/releases/download/update/update.json"
 		}
 	},
 

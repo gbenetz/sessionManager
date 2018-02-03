@@ -1,0 +1,14 @@
+{
+	"addons" : {
+		"sessionManager@example.org" : {
+			"updates" : [
+				{"version" : "0.5.2",
+				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.5.2/sessionManager.zip"},
+				{"version" : "0.5.3",
+				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.5.3/sessionManager.zip"},
+				{"version" : "0.6.0",
+				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.6.0/sessionManager.zip"}
+			]
+		}
+	}
+}
