@@ -16,7 +16,7 @@ IMG = $(wildcard images/*.svg) images/README.md
 
 all: $(PKG)
 
-$(PKG): $(MAN) $(HTML) $(JS) $(CSS) $(ICO) $(IMG)
+$(PKG): $(MAN) $(HTML) $(JS) $(CSS) $(ICO) $(IMG) README.md
 	@echo $^
 	$(ZIP) -u $(PKG) $^
 
