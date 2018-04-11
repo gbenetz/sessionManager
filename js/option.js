@@ -153,9 +153,15 @@ function checkSessions(sessionArray) {
 			return null;
 		sessionArray[i] = session;
 	}
-	sessionArray = sessionArray.sort((a, b) => a.index - b.index);
-	for (var i = 0; i < sessionArray.length; i++) {
-		sessionArray[i].index = i;
+	console.log(sessionArray);
+	if (sessionArray instanceof Array) {
+		sessionArray = sessionArray.sort((a, b) => a.index - b.index);
+		for (var i = 0; i < sessionArray.length; i++) {
+			sessionArray[i].index = i;
+		}
+	} else {
+		sessionArray = [sessionArray];
+		sessionArray[0].index = 0;
 	}
 	return sessionArray;
 }
