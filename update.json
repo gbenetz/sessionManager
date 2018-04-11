@@ -7,7 +7,9 @@
 				{"version" : "0.5.3",
 				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.5.3/sessionManager.zip"},
 				{"version" : "0.6.0",
-				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.6.0/session_manager-0.6.0-an.fx.xpi"}
+				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.6.0/session_manager-0.6.0-an.fx.xpi"},
+				{"version" : "0.6.1",
+				"update_link" : "https://github.com/gbenetz/sessionManager/releases/download/v0.6.1/session_manager-0.6.1-an.fx.xpi"}
 			]
 		}
 	}
