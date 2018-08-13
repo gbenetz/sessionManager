@@ -1,0 +1,14 @@
+.tabs-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.tabs-header-text {
+	padding-right: 10px;
+}
+
+#name {
+	font-size: 14pt;
+	font-weight: bold;
+
+}
