@@ -493,6 +493,16 @@ function deleteSession(name) {
 	browser.storage.local.set({sessions : sessions}).catch(onError);
 }
 
+function openEditPage(name) {
+	var extURL = browser.extension.getURL("");
+	var url = encodeURI(extURL + "/html/edit.html?session=" + name);
+	var creating = browser.tabs.create({
+		url : url,
+		active : true
+	});
+	creating.then((tab) => {}).catch(onError);
+}
+
 /**
  * Print the error on the console
  *
