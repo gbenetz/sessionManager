@@ -527,6 +527,7 @@ function onGot(data) {
 		}
 	}
 	handleVisualThings();
+	return Promise.resolve(sessions);
 }
 
 /**
