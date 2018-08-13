@@ -63,6 +63,15 @@ function onGot(data) {
 }
 
 /**
+ * Print the error on the console
+ *
+ * error the error occurred
+ */
+function onError(error) {
+	console.log(`Error: ${error}`);
+}
+
+/**
  * Creates all the DOM components needed by the page
  */
 function onShow(se) {
