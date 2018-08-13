@@ -62,3 +62,22 @@ function onGot(data) {
 	return Promise.resolve(sessions);
 }
 
+/**
+ * Creates all the DOM components needed by the page
+ */
+function onShow(se) {
+	var params = new URLSearchParams(document.location.search.substring(1));
+	var name = params.get("session");
+	var nameInput = document.getElementsByName("name")[0];
+	var container = document.getElementById("container")
+	nameInput.value = name;
+	var s = se.find((e) => { return e.name == name });
+
+	for (let t of s.tabs) {
+		var row = createTabRow(t);
+		container.appendChild(row);
+	}
+
+	return Promise.resolve(null);
+}
+
