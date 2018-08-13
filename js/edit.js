@@ -5,6 +5,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+var sessions = [];
+
 /**
  * Creates a row for tab data
  *
@@ -44,5 +46,19 @@ function createTabRow(tab) {
 	newDiv.appendChild(document.createTextNode("URL: "));
 	newDiv.appendChild(url);
 	return newDiv;
+}
+
+/**
+ * Retrieves data from the storage.local.get Promise.
+ * It sets up all the things to show the sessions
+ *
+ * data the data retrieved
+ */
+function onGot(data) {
+	console.log(data);
+	if (data.hasOwnProperty("sessions")) {
+		sessions = data.sessions;
+	}
+	return Promise.resolve(sessions);
 }
 
