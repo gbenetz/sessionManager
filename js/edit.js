@@ -90,3 +90,15 @@ function onShow(se) {
 	return Promise.resolve(null);
 }
 
+/*
+ * Add an eventListener for the load event in order to setup things
+ */
+window.addEventListener("load", (e) => {
+	/*
+	 * Load the already saved session (if any)
+	 */
+	browser.storage.local.get("sessions")
+		.then(onGot)
+		.then(onShow)
+		.catch(onError);
+});
