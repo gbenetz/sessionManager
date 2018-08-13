@@ -63,12 +63,15 @@ function createSessionCmds(name) {
 			   "Start the session");
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
-	//btn = createButton("session",
-	//		   "edit",
-	//		   createIcon("edit", "24px", "24px"),
-	//		   "Edit the session");
+	btn = createButton("session",
+			   "edit",
+			   createIcon("edit", "24px", "24px"),
+			   "Edit the session");
+	btn.addEventListener("click", (e) => {
+		openEditPage(name);
+	});
 	//btn.setAttribute("disabled", "");
-	//cmds.appendChild(btn);
+	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
 			   createIcon("delete", "24px", "24px"),
