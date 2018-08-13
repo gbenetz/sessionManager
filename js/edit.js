@@ -31,20 +31,28 @@ function createTabRow(tab) {
 //	newDiv.addEventListener("dragstart", drag);
 //	newDiv.addEventListener("dragover", allowDrop);
 //	newDiv.addEventListener("drop", drop);
+	var titDiv = document.createElement("div");
+	titDiv.className = "titleBox"
 	var title = document.createElement("input");
 	title.type = "text";
 	title.value = tab.title;
 	title.size = title.size * 2;
 	title.name = "title";
+	titDiv.appendChild(document.createTextNode("Title: "));
+	titDiv.appendChild(title)
+
+	var urlDiv = document.createElement("div");
+	urlDiv.className = "urlBox"
 	var url = document.createElement("input");
 	url.type = "text";
 	url.size = url.size * 4;
 	url.value = tab.url;
 	url.name = "url";
-	newDiv.appendChild(document.createTextNode("Title: "));
-	newDiv.appendChild(title);
-	newDiv.appendChild(document.createTextNode("URL: "));
-	newDiv.appendChild(url);
+	urlDiv.appendChild(document.createTextNode("URL: "));
+	urlDiv.appendChild(url);
+
+	newDiv.appendChild(titDiv);
+	newDiv.appendChild(urlDiv);
 	return newDiv;
 }
 
