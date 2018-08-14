@@ -148,4 +148,6 @@ window.addEventListener("load", (e) => {
 		.then(onGot)
 		.then(onShow)
 		.catch(onError);
+	var saveBtn = document.getElementById("save");
+	saveBtn.addEventListener("click", saveData);
 });
