@@ -20,6 +20,11 @@ function createTabRow(tab) {
 	var newDiv = document.createElement("div");
 	var tabs = document.getElementsByClassName("tabs");
 	var odd = (tab.index & 1) == 1;
+	var titDiv = document.createElement("div");
+	var title = document.createElement("input");
+	var urlDiv = document.createElement("div");
+	var url = document.createElement("input");
+
 	newDiv.className = "tab";
 	if (odd) {
 		newDiv.className += " odd-row"
@@ -31,9 +36,7 @@ function createTabRow(tab) {
 //	newDiv.addEventListener("dragstart", drag);
 //	newDiv.addEventListener("dragover", allowDrop);
 //	newDiv.addEventListener("drop", drop);
-	var titDiv = document.createElement("div");
 	titDiv.className = "titleBox"
-	var title = document.createElement("input");
 	title.type = "text";
 	title.value = tab.title;
 	title.size = title.size * 2;
@@ -41,9 +44,7 @@ function createTabRow(tab) {
 	titDiv.appendChild(document.createTextNode("Title: "));
 	titDiv.appendChild(title)
 
-	var urlDiv = document.createElement("div");
 	urlDiv.className = "urlBox"
-	var url = document.createElement("input");
 	url.type = "text";
 	url.size = url.size * 4;
 	url.value = tab.url;
@@ -124,9 +125,9 @@ function onShow(se) {
 	var name = params.get("session");
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
-	nameInput.value = name;
 	var i = se.findIndex((e) => { return e.name == name });
 	var s = se[i];
+	nameInput.value = name;
 	container.setAttribute("index", i);
 
 	for (let t of s.tabs) {
