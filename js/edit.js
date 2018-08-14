@@ -107,6 +107,8 @@ function getSingleTab(tabDiv) {
 		else if (input.name == "url")
 			url = input.value;
 	}
+	if (title == "" || url == "")
+		return null;
 	return {title: title, url: url, index: index};
 }
 
@@ -119,8 +121,21 @@ function saveData(ev) {
 	var container = document.getElementById("container");
 	var index = Number.parseInt(container.getAttribute("index"));
 	var tabs = [];
+	var msgDiv = document.getElementById("msg");
+	if (name == "") {
+		showMessage(msgDiv, "Name is empty", "red", 10);
+		return;
+	}
 	for (let c of container.children) {
-		tabs.push(getSingleTab(c));
+		var tab = getSingleTab(c);
+		if (tab == null) {
+			showMessage(msgDiv,
+				    "One or more fields are empty",
+				    "red",
+				    10);
+			return;
+		}
+		tabs.push();
 	}
 	sessions[index].tabs = tabs;
 	sessions[index].name = name;
