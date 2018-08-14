@@ -41,6 +41,7 @@ function createTabRow(tab) {
 	title.value = tab.title;
 	title.size = title.size * 2;
 	title.name = "title";
+	title.addEventListener("input", enableButtons);
 	titDiv.appendChild(document.createTextNode("Title: "));
 	titDiv.appendChild(title)
 
@@ -49,6 +50,7 @@ function createTabRow(tab) {
 	url.size = url.size * 4;
 	url.value = tab.url;
 	url.name = "url";
+	url.addEventListener("input", enableButtons);
 	urlDiv.appendChild(document.createTextNode("URL: "));
 	urlDiv.appendChild(url);
 
