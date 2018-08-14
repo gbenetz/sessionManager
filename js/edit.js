@@ -58,6 +58,18 @@ function createTabRow(tab) {
 }
 
 /**
+ * Event listener that enables the save and cancel button when something changes
+ */
+function enableButtons(ev) {
+	var save = document.getElementById("save");
+	var cancel = document.getElementById("cancel");
+	if (save.hasAttribute("disabled"))
+		save.removeAttribute("disabled");
+	if (cancel.hasAttribute("disabled"))
+		cancel.removeAttribute("disabled");
+}
+
+/**
  * Gets data from a single tab container and returns it as a tab object
  *
  * tabDiv is the DOM object of the tab container
