@@ -77,6 +77,23 @@ function getSingleTab(tabDiv) {
 }
 
 /**
+ * Event listener that saves data back to the browser storage data
+ */
+function saveData(ev) {
+	var header = document.getElementById("header");
+	var name = header.children[0].value;
+	var container = document.getElementById("container");
+	var index = Number.parseInt(container.getAttribute("index"));
+	var tabs = [];
+	for (let c of container.children) {
+		tabs.push(getSingleTab(c));
+	}
+	sessions[index].tabs = tabs;
+	sessions[index].name = name;
+	browser.storage.local.set({sessions : sessions}).catch(onError);
+}
+
+/**
  * Retrieves data from the storage.local.get Promise.
  * It sets up all the things to show the sessions
  *
