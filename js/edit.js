@@ -88,7 +88,9 @@ function onShow(se) {
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
 	nameInput.value = name;
-	var s = se.find((e) => { return e.name == name });
+	var i = se.findIndex((e) => { return e.name == name });
+	var s = se[i];
+	container.setAttribute("index", i);
 
 	for (let t of s.tabs) {
 		var row = createTabRow(t);
