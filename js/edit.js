@@ -154,6 +154,8 @@ function onShow(se) {
  * Add an eventListener for the load event in order to setup things
  */
 window.addEventListener("load", (e) => {
+	var saveBtn = document.getElementById("save");
+	var name = document.getElementById("name");
 	/*
 	 * Load the already saved session (if any)
 	 */
@@ -161,6 +163,6 @@ window.addEventListener("load", (e) => {
 		.then(onGot)
 		.then(onShow)
 		.catch(onError);
-	var saveBtn = document.getElementById("save");
 	saveBtn.addEventListener("click", saveData);
+	name.addEventListener("input", enableButtons);
 });
