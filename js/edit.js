@@ -57,6 +57,26 @@ function createTabRow(tab) {
 }
 
 /**
+ * Gets data from a single tab container and returns it as a tab object
+ *
+ * tabDiv is the DOM object of the tab container
+ * Returns an object with title, url and index fields
+ */
+function getSingleTab(tabDiv) {
+	var index = Number.parseInt(tabDiv.getAttribute("index"));
+	var title = "";
+	var url = "";
+	for (let c of tabDiv.children) {
+		var input = c.getElementsByTagName("input")[0];
+		if (input.name == "title")
+			title = input.value;
+		else if (input.name == "url")
+			url = input.value;
+	}
+	return {title: title, url: url, index: index};
+}
+
+/**
  * Retrieves data from the storage.local.get Promise.
  * It sets up all the things to show the sessions
  *
