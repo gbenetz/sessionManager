@@ -81,15 +81,12 @@ function enableButtons(ev) {
  */
 function resetTextFields(ev) {
 	var inputs = document.getElementsByTagName("input")
-	var saveBtn = document.getElementById("save");
-	var cancelBtn = document.getElementById("cancel");
 	for (let txt of inputs) {
 		if (txt.type == "text") {
 			txt.value = txt.defaultValue;	
 		}
 	}
-	saveBtn.setAttribute("disabled", "");
-	cancelBtn.setAttribute("disabled", "");
+	disableButtons();
 }
 
 /**
@@ -161,6 +158,16 @@ function getSingleTab(tabDiv) {
 }
 
 /**
+ * Disables the save and cancel buttons
+ */
+function disableButtons() {
+	var saveBtn = document.getElementById("save");
+	var cancelBtn = document.getElementById("cancel");
+	saveBtn.setAttribute("disabled", "");
+	cancelBtn.setAttribute("disabled", "");
+}
+
+/**
  * Event listener that saves data back to the browser storage data
  */
 function saveData(ev) {
@@ -193,6 +200,7 @@ function saveData(ev) {
 	sessions[index].tabs = tabs;
 	sessions[index].name = name;
 	browser.storage.local.set({sessions : sessions}).catch(onError);
+	disableButtons();
 }
 
 /**
