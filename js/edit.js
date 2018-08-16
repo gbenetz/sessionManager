@@ -88,7 +88,7 @@ function resetTextFields(ev) {
 	var inputs = document.getElementsByTagName("input")
 	for (let txt of inputs) {
 		if (txt.type == "text") {
-			txt.value = txt.defaultValue;	
+			txt.value = txt.defaultValue;
 		}
 	}
 	disableButtons();
