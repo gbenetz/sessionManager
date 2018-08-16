@@ -77,6 +77,22 @@ function enableButtons(ev) {
 }
 
 /**
+ * Event listener that reset all the text fielda to their default value
+ */
+function resetTextFields(ev) {
+	var inputs = document.getElementsByTagName("input")
+	var saveBtn = document.getElementById("save");
+	var cancelBtn = document.getElementById("cancel");
+	for (let txt of inputs) {
+		if (txt.type == "text") {
+			txt.value = txt.defaultValue;	
+		}
+	}
+	saveBtn.setAttribute("disabled", "");
+	cancelBtn.setAttribute("disabled", "");
+}
+
+/**
  * Shows a message in the specified message pane with the specified color
  *
  * div the message pane to use
