@@ -46,7 +46,7 @@ function createTabRow(tab) {
 	title.defaultValue = tab.title;
 	title.size = title.size * 2;
 	title.name = "title";
-	title.addEventListener("input", enableButtons);
+	title.addEventListener("input", changeListener);
 	titDiv.appendChild(document.createTextNode("Title: "));
 	titDiv.appendChild(title)
 
@@ -55,7 +55,7 @@ function createTabRow(tab) {
 	url.size = url.size * 4;
 	url.defaultValue = tab.url;
 	url.name = "url";
-	url.addEventListener("input", enableButtons);
+	url.addEventListener("input", changeListener);
 	urlDiv.appendChild(document.createTextNode("URL: "));
 	urlDiv.appendChild(url);
 
@@ -67,7 +67,7 @@ function createTabRow(tab) {
 /**
  * Event listener that enables the save and cancel button when something changes
  */
-function enableButtons(ev) {
+function changeListener(ev) {
 	var save = document.getElementById("save");
 	var cancel = document.getElementById("cancel");
 	if (save.hasAttribute("disabled"))
@@ -272,5 +272,5 @@ window.addEventListener("load", (e) => {
 		.catch(onError);
 	saveBtn.addEventListener("click", saveData);
 	cancelBtn.addEventListener("click", resetTextFields);
-	name.addEventListener("input", enableButtons);
+	name.addEventListener("input", changeListener);
 });
