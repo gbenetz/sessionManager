@@ -96,6 +96,20 @@ function showMessage(div, message, color, timeout) {
 }
 
 /**
+ * Shows a colored border on the specified element
+ *
+ * div the element to use
+ * color the color of the border
+ * width the width of the border in px
+ * timeout is the number of seconds the border has to be shown
+ */
+function showBorder(div, color, width, timeout) {
+	div.style.border = "" + width + "px " + color + " " + "solid";
+	window.setTimeout(() => {
+		div.style.border = "";
+	}, timeout * 1000);
+}
+/**
  * Gets data from a single tab container and returns it as a tab object
  *
  * tabDiv is the DOM object of the tab container
