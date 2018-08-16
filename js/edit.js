@@ -7,6 +7,11 @@
 
 var sessions = [];
 
+const NOERR = 0;
+const NOURL = 1;
+const NOTITLE = 2;
+const INVURL = 3;
+
 /**
  * Creates a row for tab data
  *
@@ -94,12 +99,20 @@ function showMessage(div, message, color, timeout) {
  * Gets data from a single tab container and returns it as a tab object
  *
  * tabDiv is the DOM object of the tab container
- * Returns an object with title, url and index fields
+ * Returns an object:
+ * 	error is an int
+ * 	tab is an object with title, url and index fields
+ * If error is NOERR then tab is valid.
+ * If error is NOTITLE the title was empty.
+ * If error is NOURL the url was empty.
+ * If error is INVURL the url was invalid.
+ * In all of the 3 above cases tab is null
  */
 function getSingleTab(tabDiv) {
 	var index = Number.parseInt(tabDiv.getAttribute("index"));
 	var title = "";
 	var url = "";
+	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
 	for (let c of tabDiv.children) {
 		var input = c.getElementsByTagName("input")[0];
 		if (input.name == "title")
@@ -107,9 +120,14 @@ function getSingleTab(tabDiv) {
 		else if (input.name == "url")
 			url = input.value;
 	}
-	if (title == "" || url == "")
-		return null;
-	return {title: title, url: url, index: index};
+	if (title == "")
+		return {error: NOTITLE, tab: null};
+	if (url == "")
+		return {error: NOURL, tab: null};
+	if (re.test(url))
+		return {error: INVURL, tab: null};
+
+	return {error: NOERR, tab: {title: title, url: url, index: index}};
 }
 
 /**
