@@ -244,6 +244,7 @@ function onShow(se) {
  */
 window.addEventListener("load", (e) => {
 	var saveBtn = document.getElementById("save");
+	var cancelBtn = document.getElementById("cancel");
 	var name = document.getElementById("name");
 	/*
 	 * Load the already saved session (if any)
@@ -253,5 +254,6 @@ window.addEventListener("load", (e) => {
 		.then(onShow)
 		.catch(onError);
 	saveBtn.addEventListener("click", saveData);
+	cancelBtn.addEventListener("click", resetTextFields);
 	name.addEventListener("input", enableButtons);
 });
