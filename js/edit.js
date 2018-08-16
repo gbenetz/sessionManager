@@ -65,15 +65,20 @@ function createTabRow(tab) {
 }
 
 /**
- * Event listener that enables the save and cancel button when something changes
+ * Event listener that handles the disbling and enabling of the buttons when
+ * something changes.
  */
 function changeListener(ev) {
-	var save = document.getElementById("save");
-	var cancel = document.getElementById("cancel");
-	if (save.hasAttribute("disabled"))
-		save.removeAttribute("disabled");
-	if (cancel.hasAttribute("disabled"))
-		cancel.removeAttribute("disabled");
+	var inputs = document.getElementsByTagName("input")
+	for (let txt of inputs) {
+		if (txt.type == "text" && txt.value != txt.defaultValue) {
+			enableButtons();
+			return;
+		}
+	}
+
+	disableButtons();
+	console.log(ev)
 }
 
 /**
