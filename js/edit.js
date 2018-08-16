@@ -43,7 +43,7 @@ function createTabRow(tab) {
 //	newDiv.addEventListener("drop", drop);
 	titDiv.className = "titleBox"
 	title.type = "text";
-	title.value = tab.title;
+	title.defaultValue = tab.title;
 	title.size = title.size * 2;
 	title.name = "title";
 	title.addEventListener("input", enableButtons);
@@ -53,7 +53,7 @@ function createTabRow(tab) {
 	urlDiv.className = "urlBox"
 	url.type = "text";
 	url.size = url.size * 4;
-	url.value = tab.url;
+	url.defaultValue = tab.url;
 	url.name = "url";
 	url.addEventListener("input", enableButtons);
 	urlDiv.appendChild(document.createTextNode("URL: "));
@@ -212,7 +212,7 @@ function onShow(se) {
 	var container = document.getElementById("container")
 	var i = se.findIndex((e) => { return e.name == name });
 	var s = se[i];
-	nameInput.value = name;
+	nameInput.defaultValue = name;
 	container.setAttribute("index", i);
 
 	for (let t of s.tabs) {
