@@ -158,6 +158,18 @@ function getSingleTab(tabDiv) {
 }
 
 /**
+ * Enables the save and cancel buttons
+ */
+function enableButtons() {
+	var saveBtn = document.getElementById("save");
+	var cancelBtn = document.getElementById("cancel");
+	if (saveBtn.hasAttribute("disabled"))
+		saveBtn.removeAttribute("disabled");
+	if (cancelBtn.hasAttribute("disabled"))
+		cancelBtn.removeAttribute("disabled");
+}
+
+/**
  * Disables the save and cancel buttons
  */
 function disableButtons() {
