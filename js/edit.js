@@ -175,8 +175,10 @@ function enableButtons() {
 function disableButtons() {
 	var saveBtn = document.getElementById("save");
 	var cancelBtn = document.getElementById("cancel");
-	saveBtn.setAttribute("disabled", "");
-	cancelBtn.setAttribute("disabled", "");
+	if (!saveBtn.hasAttribute("disabled"))
+		saveBtn.setAttribute("disabled", "");
+	if (!cancelBtn.hasAttribute("disabled"))
+		cancelBtn.setAttribute("disabled", "");
 }
 
 /**
