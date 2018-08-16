@@ -177,12 +177,13 @@ function saveData(ev) {
 	var index = Number.parseInt(container.getAttribute("index"));
 	var tabs = [];
 	var msgDiv = document.getElementById("msg");
+	var inputs;
 	if (name == "") {
 		showMessage(msgDiv, "Name is empty", "red", 10);
 		return;
 	}
 	for (let c of container.children) {
-		var obj = getSingleTab(c);
+		let obj = getSingleTab(c);
 		if (obj.error == NOERR) {
 			tabs.push(obj.tab);
 		} else {
@@ -197,9 +198,17 @@ function saveData(ev) {
 			return;
 		}
 	}
+
 	sessions[index].tabs = tabs;
 	sessions[index].name = name;
 	browser.storage.local.set({sessions : sessions}).catch(onError);
+	// the following change the default value to prevent the cancel button
+	// to restore the original value. Now we use the saved one
+	inputs = document.getElementsByTagName("input");
+	for (let i of inputs) {
+		if (i.type == "text")
+			i.defaultValue = i.value;
+	}
 	disableButtons();
 }
 
