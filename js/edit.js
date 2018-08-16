@@ -159,15 +159,20 @@ function saveData(ev) {
 		return;
 	}
 	for (let c of container.children) {
-		var tab = getSingleTab(c);
-		if (tab == null) {
-			showMessage(msgDiv,
-				    "One or more fields are empty",
-				    "red",
-				    10);
+		var obj = getSingleTab(c);
+		if (obj.error == NOERR) {
+			tabs.push(obj.tab);
+		} else {
+			let msg = "";
+			if (obj.error != INVURL) {
+				msg = "One or more fields are empty";
+			} else {
+				msg = "The url schema is not acceptable."
+			}
+			showMessage(msgDiv, msg, "red", 10);
+			showBorder(c, "red", 4, 10);
 			return;
 		}
-		tabs.push();
 	}
 	sessions[index].tabs = tabs;
 	sessions[index].name = name;
