@@ -153,9 +153,9 @@ function changeListener(ev) {
 }
 
 /**
- * Event listener that reset all the text fielda to their default value
+ * Event listener that reset all the page to default
  */
-function resetTextFields(ev) {
+function resetPage(ev) {
 	var inputs = document.getElementsByTagName("input")
 	for (let txt of inputs) {
 		if (txt.type == "text") {
@@ -367,6 +367,6 @@ window.addEventListener("load", (e) => {
 		.then(onShow)
 		.catch(onError);
 	saveBtn.addEventListener("click", saveData);
-	cancelBtn.addEventListener("click", resetTextFields);
+	cancelBtn.addEventListener("click", resetPage);
 	name.addEventListener("input", changeListener);
 });
