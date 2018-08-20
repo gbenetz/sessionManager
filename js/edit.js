@@ -156,12 +156,25 @@ function changeListener(ev) {
  * Event listener that reset all the page to default
  */
 function resetPage(ev) {
-	var inputs = document.getElementsByTagName("input")
+	var inputs = document.getElementsByTagName("input");
+	var tabs = document.getElementsByClassName("tab");
+	var container = document.getElementById("container");
+
 	for (let txt of inputs) {
 		if (txt.type == "text") {
 			txt.value = txt.defaultValue;
 		}
 	}
+
+	for (var i = 0; i < tabs.length; i++) {
+		t = Array.prototype.filter.call(tabs, (e) => {
+			var oi = e.getAttribute("original-index");
+			return Number.parseInt(oi, 10) == i;
+		});
+		t[0].setAttribute("index", i);
+		container.appendChild(t[0]);
+	}
+
 	disableButtons();
 }
 
