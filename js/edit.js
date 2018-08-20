@@ -107,6 +107,7 @@ function createTabRow(tab) {
 		newDiv.className += " even-row"
 	}
 	newDiv.setAttribute("index", tab.index);
+	newDiv.setAttribute("original-index", tab.index);
 	newDiv.setAttribute("draggable", "true");
 	newDiv.addEventListener("dragstart", drag);
 	newDiv.addEventListener("dragover", allowDrop);
@@ -297,6 +298,12 @@ function saveData(ev) {
 	for (let i of inputs) {
 		if (i.type == "text")
 			i.defaultValue = i.value;
+	}
+	// change the original-index to the current for the same reason of the
+	// above loop
+	tabs = document.getElementsByClassName("tab");
+	for (let t of tabs) {
+		t.setAttribute("original-index", t.getAttribute("index"));
 	}
 	disableButtons();
 }
