@@ -120,6 +120,13 @@ function createTabRow(tab) {
 	var title = document.createElement("input");
 	var urlDiv = document.createElement("div");
 	var url = document.createElement("input");
+	var iconDiv = document.createElement("div")
+	var empty = document.createElement("div");
+	iconDiv.className = "iconBox";
+	iconDiv.appendChild(createIcon("drag", 25, 25));
+	empty.className = "empty";
+	empty.appendChild(document.createTextNode("\xA0"));
+	iconDiv.appendChild(empty);
 
 	newDiv.className = "tab";
 	if (odd) {
@@ -151,6 +158,7 @@ function createTabRow(tab) {
 	urlDiv.appendChild(document.createTextNode("URL: "));
 	urlDiv.appendChild(url);
 
+	newDiv.appendChild(iconDiv);
 	newDiv.appendChild(titDiv);
 	newDiv.appendChild(urlDiv);
 	return newDiv;
@@ -252,6 +260,8 @@ function getSingleTab(tabDiv) {
 	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
 	for (let c of tabDiv.children) {
 		var input = c.getElementsByTagName("input")[0];
+		if (input == undefined)
+			continue;
 		if (input.name == "title")
 			title = input.value;
 		else if (input.name == "url")
