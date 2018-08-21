@@ -145,6 +145,7 @@ function createTabRow(tab) {
 	var url = document.createElement("input");
 	var iconDiv = document.createElement("div")
 	var empty = document.createElement("div");
+	var deleteDiv, btn;
 	iconDiv.className = "iconBox";
 	iconDiv.appendChild(createIcon("drag", 25, 25));
 	empty.className = "empty";
@@ -181,9 +182,23 @@ function createTabRow(tab) {
 	urlDiv.appendChild(document.createTextNode("URL: "));
 	urlDiv.appendChild(url);
 
+	deleteDiv = document.createElement("div");
+	deleteDiv.className = "deleteBox"
+	empty = document.createElement("div");
+	empty.className = "empty";
+	empty.appendChild(document.createTextNode("\xA0"));
+	btn = createButton("row",
+			   "delete",
+			   createIcon("delete", "24px", "24px"),
+			   "Delete the tab");
+	deleteDiv.appendChild(empty);
+	deleteDiv.appendChild(btn);
+
 	newDiv.appendChild(iconDiv);
 	newDiv.appendChild(titDiv);
 	newDiv.appendChild(urlDiv);
+	newDiv.appendChild(deleteDiv);
+
 	return newDiv;
 }
 
