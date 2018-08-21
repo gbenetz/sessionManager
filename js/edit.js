@@ -84,6 +84,27 @@ function drop(ev) {
 }
 
 /**
+ * Create an img with the specified icon and size
+ *
+ * type		is the name of the icon. Must be one of the svg files in the
+ * 		images dir.
+ * 		type must be the name without the .svg suffix.
+ * width	width of the icon. Must be a string suitable for the width
+ * 		attribute.
+ * height	height of the icon. Must be a string suitable for the height
+ * 		attribute.
+ */
+function createIcon(type, width, height) {
+	var icon = document.createElement("img")
+	icon.setAttribute("src", "../images/" + type + ".svg");
+	icon.setAttribute("width", width);
+	icon.setAttribute("height", height);
+	icon.className = "icon";
+	icon.setAttribute("draggable", false);
+	return icon;
+}
+
+/**
  * Creates a row for tab data
  *
  * tab is an object containing:
