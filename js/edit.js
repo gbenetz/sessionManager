@@ -6,6 +6,7 @@
  */
 
 var sessions = [];
+var unsaved = false;
 
 const NOERR = 0;
 const NOURL = 1;
@@ -80,6 +81,8 @@ function drop(ev) {
 		container.appendChild(dragged);
 	else
 		container.insertBefore(dragged, dropped);
+
+	unsaved = true;
 	enableButtons();
 }
 
@@ -172,11 +175,13 @@ function changeListener(ev) {
 	var inputs = document.getElementsByTagName("input")
 	for (let txt of inputs) {
 		if (txt.type == "text" && txt.value != txt.defaultValue) {
+			unsaved = true;
 			enableButtons();
 			return;
 		}
 	}
 
+	unsaved = false;
 	disableButtons();
 	console.log(ev)
 }
@@ -204,6 +209,7 @@ function resetPage(ev) {
 		container.appendChild(t[0]);
 	}
 
+	unsaved = false;
 	disableButtons();
 }
 
@@ -349,6 +355,8 @@ function saveData(ev) {
 	for (let t of tabs) {
 		t.setAttribute("original-index", t.getAttribute("index"));
 	}
+
+	unsaved = false;
 	disableButtons();
 }
 
@@ -414,3 +422,13 @@ window.addEventListener("load", (e) => {
 	cancelBtn.addEventListener("click", resetPage);
 	name.addEventListener("input", changeListener);
 });
+
+window.onbeforeunload = function(e) {
+	var dialogText = "There's unsaved changes. Do you wnat to quit?";
+	if (!unsaved) {
+		return undefined;
+	}
+
+	e.returnValue = dialogText;
+	return dialogText;
+};
