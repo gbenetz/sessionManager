@@ -19,6 +19,15 @@
 	flex-direction: column;
 }
 
+.iconBox {
+	display: flex;
+	flex-direction: row;
+}
+
+.empty {
+	min-width: 2%;
+}
+
 /*.odd-row {
 	background-color: #bfbfbf;
 }
