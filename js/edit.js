@@ -212,7 +212,7 @@ function createTabRow(tab) {
 function newListener(ev) {
 	var container = document.getElementById("container");
 	var tab = {
-		index:	sessions.length,
+		index:	sessions[sessionIndex].tabs.length,
 		title:	"",
 		url:	""
 	};
