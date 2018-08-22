@@ -450,6 +450,8 @@ function saveData(ev) {
 	// above loop
 	tabs = document.getElementsByClassName("tab");
 	for (let t of tabs) {
+		if (t.hasAttribute("new"))
+			t.removeAttribute("new");
 		t.setAttribute("original-index", t.getAttribute("index"));
 	}
 
