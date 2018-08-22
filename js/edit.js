@@ -210,7 +210,7 @@ function createTabRow(tab) {
 function deleteListener(ev) {
 	var container = document.getElementById("container");
 	var el = ev.target;
-	var i;
+	var i, inputs, flag;
 	while (!el.className.includes("tab"))
 		el = el.parentElement;
 
@@ -221,9 +221,20 @@ function deleteListener(ev) {
 		i++;
 	}
 
-	trash.push(el);
-	unsaved = true;
-	enableButtons();
+	inputs = el.getElementsByTagName("input");
+	flag = false;
+	for (let inp of input) {
+		if (inp.defaultValue != "" || inp.value != "") {
+			flag = true;
+			break;
+		}
+	}
+
+	if (flag) {
+		trash.push(el);
+		unsaved = true;
+		enableButtons();
+	}
 }
 
 /**
