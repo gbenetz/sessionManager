@@ -24,6 +24,10 @@
 	flex-direction: row;
 }
 
+.dataBox {
+	display: flex;
+}
+
 .deleteBox {
 	display: flex;
 	flex-direction: row;
