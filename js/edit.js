@@ -6,6 +6,7 @@
  */
 
 var sessions = [];
+var trash = [];
 var unsaved = false;
 
 const NOERR = 0;
@@ -220,6 +221,7 @@ function deleteListener(ev) {
 		i++;
 	}
 
+	trash.push(el);
 	unsaved = true;
 	enableButtons();
 }
@@ -247,10 +249,16 @@ function changeListener(ev) {
  * Event listener that reset all the page to default
  */
 function resetPage(ev) {
-	var inputs = document.getElementsByTagName("input");
 	var tabs = document.getElementsByClassName("tab");
 	var container = document.getElementById("container");
+	var inputs;
 
+	for (let tab of trash) {
+		container.appendChild(tab);
+	}
+
+	trash = [];
+	inputs = document.getElementsByTagName("input");
 	for (let txt of inputs) {
 		if (txt.type == "text") {
 			txt.value = txt.defaultValue;
@@ -375,10 +383,12 @@ function saveData(ev) {
 	var tabs = [];
 	var msgDiv = document.getElementById("msg");
 	var inputs;
+
 	if (name == "") {
 		showMessage(msgDiv, "Name is empty", "red", 10);
 		return;
 	}
+
 	for (let c of container.children) {
 		let obj = getSingleTab(c);
 		if (obj.error == NOERR) {
@@ -413,6 +423,7 @@ function saveData(ev) {
 		t.setAttribute("original-index", t.getAttribute("index"));
 	}
 
+	trash = [];
 	unsaved = false;
 	disableButtons();
 }
