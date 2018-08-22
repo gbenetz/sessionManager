@@ -207,6 +207,23 @@ function createTabRow(tab) {
 }
 
 /**
+ * Event listener to add a new empty tab
+ */
+function newListener(ev) {
+	var container = document.getElementById("container");
+	var tab = {
+		index:	sessions.length,
+		title:	"",
+		url:	""
+	};
+	var newTab = createTabRow(tab);
+	newTab.setAttribute("new", "");
+	container.appendChild(newTab);
+	unsaved = true;
+	enableButtons();
+}
+
+/**
  * Event listener to delete a tab
  */
 function deleteListener(ev) {
@@ -511,6 +528,7 @@ window.addEventListener("load", (e) => {
 		.catch(onError);
 	saveBtn.addEventListener("click", saveData);
 	cancelBtn.addEventListener("click", resetPage);
+	newBtn.addEventListener("click", newListener);
 	name.addEventListener("input", changeListener);
 });
 
