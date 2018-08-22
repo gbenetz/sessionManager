@@ -191,6 +191,7 @@ function createTabRow(tab) {
 			   "delete",
 			   createIcon("delete", "24px", "24px"),
 			   "Delete the tab");
+	btn.addEventListener("click", deleteListener);
 	deleteDiv.appendChild(empty);
 	deleteDiv.appendChild(btn);
 
@@ -203,7 +204,28 @@ function createTabRow(tab) {
 }
 
 /**
- * Event listener that handles the disbling and enabling of the buttons when
+ * Event listener to delete a tab
+ */
+function deleteListener(ev) {
+	var container = document.getElementById("container");
+	var el = ev.target;
+	var i;
+	while (!el.className.includes("tab"))
+		el = el.parentElement;
+
+	container.removeChild(el);
+	i = 0;
+	for (let c of container.children) {
+		c.setAttribute("index", i);
+		i++;
+	}
+
+	unsaved = true;
+	enableButtons();
+}
+
+/**
+ * Event listener that handles the disabling and enabling of the buttons when
  * something changes.
  */
 function changeListener(ev) {
