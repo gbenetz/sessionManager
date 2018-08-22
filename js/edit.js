@@ -147,6 +147,7 @@ function createTabRow(tab) {
 	var urlDiv = document.createElement("div");
 	var url = document.createElement("input");
 	var iconDiv = document.createElement("div")
+	var dataDiv = document.createElement("div")
 	var empty = document.createElement("div");
 	var deleteDiv, btn;
 	iconDiv.className = "iconBox";
@@ -198,10 +199,13 @@ function createTabRow(tab) {
 	deleteDiv.appendChild(empty);
 	deleteDiv.appendChild(btn);
 
+	dataDiv.className = 'dataBox';
+
 	newDiv.appendChild(iconDiv);
-	newDiv.appendChild(titDiv);
-	newDiv.appendChild(urlDiv);
-	newDiv.appendChild(deleteDiv);
+	dataDiv.appendChild(titDiv);
+	dataDiv.appendChild(urlDiv);
+	dataDiv.appendChild(deleteDiv);
+	newDiv.appendChild(dataDiv);
 
 	return newDiv;
 }
