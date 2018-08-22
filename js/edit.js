@@ -7,6 +7,7 @@
 
 var sessions = [];
 var sessionName = "";
+var sessionIndex = -1;
 var trash = [];
 var unsaved = false;
 
@@ -391,7 +392,7 @@ function saveData(ev) {
 	var header = document.getElementById("header");
 	var name = header.children[0].value;
 	var container = document.getElementById("container");
-	var index = Number.parseInt(container.getAttribute("index"));
+	var index = sessionIndex;
 	var tabs = [];
 	var msgDiv = document.getElementById("msg");
 	var inputs;
@@ -451,6 +452,9 @@ function onGot(data) {
 	if (data.hasOwnProperty("sessions")) {
 		sessions = data.sessions;
 	}
+	sessionIndex = sessions.findIndex((e) => {
+		return e.name == sessionName;
+	});
 	return Promise.resolve(sessions);
 }
 
@@ -469,9 +473,7 @@ function onError(error) {
 function onShow(se) {
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
-	var i = se.findIndex((e) => { return e.name == sessionName });
-	var s = se[i];
-	container.setAttribute("index", i);
+	var s = sessions[sessionIndex];
 	nameInput.defaultValue = sessionName;
 
 	for (let t of s.tabs) {
