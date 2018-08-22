@@ -279,7 +279,7 @@ function changeListener(ev) {
  * Event listener that reset all the page to default
  */
 function resetPage(ev) {
-	var tabs = document.getElementsByClassName("tab");
+	var tabs;
 	var container = document.getElementById("container");
 	var inputs;
 
@@ -295,6 +295,14 @@ function resetPage(ev) {
 		}
 	}
 
+	tabs = document.getElementsByClassName("tab");
+	for (let t of tabs) {
+		if (t.hasAttribute("new")) {
+			container.removeChild(t);
+		}
+	}
+
+	tabs = document.getElementsByClassName("tab");
 	for (var i = 0; i < tabs.length; i++) {
 		t = Array.prototype.filter.call(tabs, (e) => {
 			var oi = e.getAttribute("original-index");
