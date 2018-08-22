@@ -366,6 +366,7 @@ function getSingleTab(tabDiv) {
 	var index = Number.parseInt(tabDiv.getAttribute("index"));
 	var title = "";
 	var url = "";
+	var urlIn = null;
 	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
 	for (let c of tabDiv.children) {
 		var input = c.getElementsByTagName("input")[0];
@@ -373,8 +374,10 @@ function getSingleTab(tabDiv) {
 			continue;
 		if (input.name == "title")
 			title = input.value;
-		else if (input.name == "url")
+		else if (input.name == "url") {
 			url = input.value;
+			urlIn = input;
+		}
 	}
 	if (title == "")
 		return {error: NOTITLE, tab: null};
@@ -382,6 +385,12 @@ function getSingleTab(tabDiv) {
 		return {error: NOURL, tab: null};
 	if (re.test(url))
 		return {error: INVURL, tab: null};
+	try {
+		let u = new URL(url);
+	} catch(TypeError) {
+		url = "http://" + url;
+		urlIn.value = url;
+	}
 
 	return {error: NOERR, tab: {title: title, url: url, index: index}};
 }
