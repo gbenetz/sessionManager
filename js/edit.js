@@ -6,6 +6,7 @@
  */
 
 var sessions = [];
+var sessionName = "";
 var trash = [];
 var unsaved = false;
 
@@ -466,14 +467,12 @@ function onError(error) {
  * Creates all the DOM components needed by the page
  */
 function onShow(se) {
-	var params = new URLSearchParams(document.location.search.substring(1));
-	var name = params.get("session");
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
-	var i = se.findIndex((e) => { return e.name == name });
+	var i = se.findIndex((e) => { return e.name == sessionName });
 	var s = se[i];
-	nameInput.defaultValue = name;
 	container.setAttribute("index", i);
+	nameInput.defaultValue = sessionName;
 
 	for (let t of s.tabs) {
 		var row = createTabRow(t);
@@ -489,7 +488,10 @@ function onShow(se) {
 window.addEventListener("load", (e) => {
 	var saveBtn = document.getElementById("save");
 	var cancelBtn = document.getElementById("cancel");
+	var newBtn = document.getElementById("new");
 	var name = document.getElementById("name");
+	var params = new URLSearchParams(document.location.search.substring(1));
+	sessionName = params.get("session");
 	/*
 	 * Load the already saved session (if any)
 	 */
