@@ -492,6 +492,14 @@ window.addEventListener("load", (e) => {
 	var name = document.getElementById("name");
 	var params = new URLSearchParams(document.location.search.substring(1));
 	sessionName = params.get("session");
+	if (sessionName == null || sessionName == "") {
+		var msgDiv = document.getElementById("msg");
+		showMessage(msgDiv,
+			"No session specified!\nPlease close this page",
+			"red",
+			365 * 3600);
+		return;
+	}
 	/*
 	 * Load the already saved session (if any)
 	 */
