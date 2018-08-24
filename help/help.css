@@ -27,6 +27,11 @@ h1 {
 	background-color: #4CAF50;
 }
 
+.thrash {
+	border-color: #f00;
+	background-color: #f00;
+}
+
 .uri-scheme {
 	font-family: courier;
 	border: lightgray solid 1px;
