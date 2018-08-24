@@ -63,12 +63,15 @@ function createSessionCmds(name) {
 			   "Start the session");
 	btn.addEventListener("click", startSession);
 	cmds.appendChild(btn);
-	//btn = createButton("session",
-	//		   "edit",
-	//		   createIcon("edit", "24px", "24px"),
-	//		   "Edit the session");
+	btn = createButton("session",
+			   "edit",
+			   createIcon("edit", "24px", "24px"),
+			   "Edit the session");
+	btn.addEventListener("click", (e) => {
+		openEditPage(name);
+	});
 	//btn.setAttribute("disabled", "");
-	//cmds.appendChild(btn);
+	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "delete",
 			   createIcon("delete", "24px", "24px"),
@@ -494,6 +497,26 @@ function deleteSession(name) {
 	browser.storage.local.set({sessions : sessions}).catch(onError);
 }
 
+function openEditPage(name) {
+	var extURL = browser.extension.getURL("");
+	var url = encodeURI(extURL + "/html/edit.html?session=" + name);
+	var creating = browser.tabs.create({
+		url : url,
+		active : true
+	});
+	creating.then((tab) => {}).catch(onError);
+}
+
+function openHelpPage(ev) {
+	var extURL = browser.extension.getURL("");
+	var url = encodeURI(extURL + "/help/help.html");
+	var creating = browser.tabs.create({
+		url : url,
+		active : true
+	});
+	creating.then((tab) => {}).catch(onError);
+}
+
 /**
  * Print the error on the console
  *
@@ -518,6 +541,7 @@ function onGot(data) {
 		}
 	}
 	handleVisualThings();
+	return Promise.resolve(sessions);
 }
 
 /**
@@ -540,6 +564,8 @@ window.addEventListener("load", (e) => {
 	 */
 	var saveBtn = document.getElementById("session-save");
 	saveBtn.addEventListener("click", saveSession);
+	var helpBtn = document.getElementById("help-cmd");
+	helpBtn.addEventListener("click", openHelpPage);
 	var settingsBtn = document.getElementById("settings-cmd");
 	settingsBtn.addEventListener("click", (ev) => {
 		var opening = browser.runtime.openOptionsPage();

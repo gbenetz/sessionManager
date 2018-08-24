@@ -1,0 +1,57 @@
+.tabs-header {
+	display: flex;
+	flex-direction: row;
+}
+
+.tabs-header-text {
+	padding-right: 10px;
+}
+
+.tab {
+	width: -moz-fit-content;
+	display: flex;
+	align-items: center;
+	margin: 3px 0px;
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+}
+
+.iconBox {
+	display: flex;
+	flex-direction: row;
+}
+
+.dataBox {
+	display: flex;
+}
+
+.deleteBox {
+	display: flex;
+	flex-direction: row;
+}
+
+.delete-btn {
+	background-color: #f00;
+	border-color: #f00;
+}
+
+.empty {
+	min-width: 2%;
+}
+
+/*.odd-row {
+	background-color: #bfbfbf;
+}
+
+.even-row {
+	background-color: #f2f2f2;
+}
+*/
+#name {
+	font-size: 14pt;
+	font-weight: bold;
+
+}
