@@ -438,6 +438,17 @@ function saveData(ev) {
 	if (name == "") {
 		showMessage(msgDiv, "Name is empty", "red", 10);
 		return;
+	} else {
+		let flag = sessions.find((s) => {
+			return s.name == name;
+		});
+		if (flag) {
+			showMessage(msgDiv,
+				"A session named " + name + " already exists",
+				"red",
+				10);
+			return;
+		}
 	}
 
 	for (let c of container.children) {
