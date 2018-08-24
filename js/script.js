@@ -507,6 +507,16 @@ function openEditPage(name) {
 	creating.then((tab) => {}).catch(onError);
 }
 
+function openHelpPage(ev) {
+	var extURL = browser.extension.getURL("");
+	var url = encodeURI(extURL + "/help/help.html");
+	var creating = browser.tabs.create({
+		url : url,
+		active : true
+	});
+	creating.then((tab) => {}).catch(onError);
+}
+
 /**
  * Print the error on the console
  *
@@ -554,6 +564,8 @@ window.addEventListener("load", (e) => {
 	 */
 	var saveBtn = document.getElementById("session-save");
 	saveBtn.addEventListener("click", saveSession);
+	var helpBtn = document.getElementById("help-cmd");
+	helpBtn.addEventListener("click", openHelpPage);
 	var settingsBtn = document.getElementById("settings-cmd");
 	settingsBtn.addEventListener("click", (ev) => {
 		var opening = browser.runtime.openOptionsPage();
