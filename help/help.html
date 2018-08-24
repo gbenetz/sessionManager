@@ -1,0 +1,44 @@
+<!--
+   - Author: Guido Benetti guido.benetti01@gmail.com
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="help.css">
+		<title>Session Manager Help</title>
+		<!--
+	  script type="text/javascript" src="../js/edit.js"></script
+	  -->
+	</head>
+	<body>
+		<h1>Session Manager</h1>
+		<div class="center">Firefox extension that saves the opened tabs and allows the user to restore them later</div>
+		<div class="normal">
+			<h3>Save a session</h3>
+			<p>
+			Open the popup and enter a name for the session in the "name" text field
+			<div class=sep-img>
+			<img src="img/save-pane.png" alt="The name textbox and the save button"/>
+			</div>
+			then click the <img class="save" src="../images/save.svg" width="24px" height="24px"/>  button. All the tabs in the current window will be saved under a new
+			session. Tabs with an url begining with <span class="uri-scheme">file://</span>, <span class="uri-scheme">about://</span>, <span class="uri-scheme">data://</span>, <span class="uri-scheme">javascript://</span>, <span class="uri-scheme">chrome://</span> or
+			<span class="uri-scheme">moz-extension://</span> are not saved because Firefox don't allow an extension to restore them.
+			</p>
+			<p>
+			When the new session is stored a row with the name of the new session is shown.
+			<div class=sep-img>
+			<img src="img/sessionName.png" alt="The popup showing the session name"/>
+			</div>
+			If the chosen name exits, the extension will ask if you want to overwrite
+			the existing session.
+			<div class=sep-img-with-top-pad>
+			<img src="img/overwrite.png" alt="The dialog asking if the user want to overwrite"/>
+			</div>
+			</p>
+		</div>
+	</body>
+</html>
