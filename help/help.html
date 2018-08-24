@@ -1,0 +1,101 @@
+<!--
+   - Author: Guido Benetti guido.benetti01@gmail.com
+   - This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="help.css">
+		<title>Session Manager Help</title>
+		<!--
+	  script type="text/javascript" src="../js/edit.js"></script
+	  -->
+	</head>
+	<body>
+		<h1>Session Manager</h1>
+		<div class="center">Firefox extension that saves the opened tabs and allows the user to restore them later</div>
+		<div class="normal index">
+		<h3>Index</h3>
+		<ul>
+			<li><a href="#save">Save a session</a></li>
+			<li><a href="#restore">Restoring</a></li>
+			<li><a href="#del">Delete</a></li>
+			<li><a href="#manage">Management</a></li>
+			<li><a href="#export">Exporting/Importing session data</a></li>
+			<li><a href="#edit">Edit</a></li>
+		</ul>
+		</div>
+		<div class="normal save-par">
+			<h3 id="save">Save a session</h3>
+			<p>
+			Open the popup and enter a name for the session in the "name" text field
+			<div class=sep-img>
+			<img src="img/save-pane.png" alt="The name textbox and the save button"/>
+			</div>
+			then click the <img class="save buttons" src="../images/save.svg" width="24px" height="24px"/>  button. All the tabs in the current window will be saved under a new
+			session. Tabs with an url begining with <span class="uri-scheme">file://</span>, <span class="uri-scheme">about://</span>, <span class="uri-scheme">data://</span>, <span class="uri-scheme">javascript://</span>, <span class="uri-scheme">chrome://</span> or
+			<span class="uri-scheme">moz-extension://</span> are not saved because Firefox don't allow an extension to restore them.
+			</p>
+			<p>
+			When the new session is stored a row with the name of the new session is shown.
+			<div class=sep-img>
+			<img src="img/sessionName.png" alt="The popup showing the session name"/>
+			</div>
+			If the chosen name exits, the extension will ask if you want to overwrite
+			the existing session.
+			<div class=sep-img-with-top-pad>
+			<img src="img/overwrite.png" alt="The dialog asking if the user want to overwrite"/>
+			</div>
+			</p>
+		</div>
+		<div class="normal restore-par">
+				<h3 id="restore">Restoring</h3>
+				<p>
+				To restore an already saved session, click on the <img class="start buttons" src="../images/start.svg" width="24px" height="24px"/> button on the row of
+				the session to restore. A new window will appear loading all the stored tabs.
+				</p>
+		</div>
+		<div class="normal del-par">
+				<h3 id="del">Delete</h3>
+				<p>
+				To delete a session click the <img class="thrash buttons" src="../images/delete.svg" width="24px" height="24px"/> button on the row of the session to delete.
+				A dialog will ask for a confirmation.
+				</p>
+		</div>
+		<div class="normal manage-par">
+				<h3 id="manage">Management</h3>
+				<p>
+				You can sort your sessions by simply drag the session you want to move and dropping
+				it in the new position.
+				</p>
+		</div>
+		<div class="normal export-par">
+				<h3 id="export">Exporting/Importing session data</h3>
+				<p>
+				By clicking on the <img class="option buttons" src="../images/settings.svg" width="24px" height="24px"/> button, the extension option page will be shown.
+				In this page you can export all the saved session in a JSON file.
+				You can also import data in the form of a JSON file. If the file don't adhere to
+				the correct format the import process will be aborted.
+				By importing a session file all the saved data will be overwritten by the imported
+				data.
+				</p>
+		</div>
+		<div class="normal edit-par">
+				<h3 id="edit">Edit</h3>
+				<p>
+				To edit a session click the <img class="edit buttons" src="../images/edit.svg" width="24px" height="24px"/> button of the session you want to change. It will open the edit page for the session. 
+				<div class=sep-img>
+				<img src="img/edit.png" alt="The session edit page"/>
+				</div>
+				Here you can change the session name, change the title and the url of each saved
+				tab, sort the tabs in different order, and add or delete tabs.
+				The save and the cancel button are disabled until a modification is made.
+				The save button (obviously) saves the modified session.
+				The cancel session undo all the unsaved changes. When some changes are saved the cancel button cannot revert them.
+				</p>
+		</div>
+	</body>
+</html>

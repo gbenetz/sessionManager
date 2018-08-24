@@ -11,7 +11,7 @@ the "save" button. All the tabs in the current window will be saved under a new
 session. Tabs with an url begining with file, about, data, javascript, chrome or
 moz-extension are not saved because Firefox don't allow an extension to restore them.
 When the new session is stored a row with the name of the new session is shown.
-If the chosen name still exits, the extension will ask if you want to overwrite
+If the chosen name exits, the extension will ask if you want to overwrite
 the existing session.
 
 ### Restoring
@@ -27,13 +27,16 @@ You can sort your sessions by simply drag the session you want to move and dropp
 it in the new position.
 
 ### Edit
-Not implemented yet.
+To edit a session click the edit button (the notebook button) of the session you
+want to change. It will open the edit page for the session. 
+Here you can change the session name, change the title and the url of each saved
+tab, sort the tabs in different order, and add or delete tabs.
 
 ### Exporting/Importing session data
 By clicking on the "option" button, the extension option page will be shown.
 In this page you can export all the saved session in a JSON file.
-You can also import data in the form of a JSON file. If the file don' adhere to
-the correct format the import porcess will be aborted.
+You can also import data in the form of a JSON file. If the file don't adhere to
+the correct format the import process will be aborted.
 By importing a session file all the saved data will be overwritten by the imported
 data.
 

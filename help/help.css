@@ -1,0 +1,118 @@
+body {
+	font-family: arial;
+}
+
+h1 {
+	text-align: center;
+}
+
+h3 { 
+  margin: 4px;
+}
+
+p {
+	margin: 2px;
+}
+
+ul {
+	list-style-type: square;	
+}
+
+.normal {
+	border: solid white 2px;
+	border-radius: 10px;
+	background-color: white;
+	margin-bottom: 20px;
+}
+
+.index {
+	border-color: darkslategray;
+	background-color: #bfd9d9;
+	margin-top: 10px;
+	display: table;
+	padding-right: 10px;
+}
+
+.save-par {
+	border-color: #c7c738;
+	background-color: beige;
+}
+
+.restore-par {
+	border-color: blue;
+	background-color: #ccccff;
+}
+
+.del-par {
+	border-color: blueviolet;
+	background-color: #e6d2f9;
+}
+
+.manage-par {
+	border-color: yellowgreen;
+	background-color: #d6ebad;
+}
+
+.export-par {
+	border-color: yellow;
+	background-color: #ffffb3;
+}
+
+.edit-par {
+	border-color: crimson;
+	background-color: #f6a2b3;
+}
+
+.center {
+	text-align: center;
+	
+}
+
+/*.save-pane-img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+*/
+
+.buttons {
+	padding: 4px;
+}
+
+.save {
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.start {
+	border-color: #4CAF50;
+	background-color: #4CAF50;
+}
+
+.thrash {
+	border-color: #f00;
+	background-color: #f00;
+}
+
+.option {
+	background-color: white;
+	border-color: white;
+}
+
+.edit {
+	background-color: #ffcc00;
+	border-color: #ffcc00;
+}
+
+.uri-scheme {
+	font-family: courier;
+	border: lightgray solid 1px;
+	background-color: lightgray;
+	border-radius: 10px;
+	padding: 1px;
+	white-space: nowrap;
+}
+
+.sep-img-with-top-pad {
+	padding-top: 10px;
+}
