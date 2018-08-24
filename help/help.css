@@ -1,3 +1,7 @@
+body {
+	font-family: arial;
+}
+
 h1 {
 	text-align: center;
 }
@@ -10,11 +14,23 @@ p {
 	margin: 2px;
 }
 
+ul {
+	list-style-type: square;	
+}
+
 .normal {
 	border: solid white 2px;
 	border-radius: 10px;
 	background-color: white;
 	margin-bottom: 20px;
+}
+
+.index {
+	border-color: darkslategray;
+	background-color: #bfd9d9;
+	margin-top: 10px;
+	display: table;
+	padding-right: 10px;
 }
 
 .save-par {

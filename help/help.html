@@ -17,8 +17,19 @@
 	<body>
 		<h1>Session Manager</h1>
 		<div class="center">Firefox extension that saves the opened tabs and allows the user to restore them later</div>
+		<div class="normal index">
+		<h3>Index</h3>
+		<ul>
+			<li><a href="#save">Save a session</a></li>
+			<li><a href="#restore">Restoring</a></li>
+			<li><a href="#del">Delete</a></li>
+			<li><a href="#manage">Management</a></li>
+			<li><a href="#export">Exporting/Importing session data</a></li>
+			<li><a href="#edit">Edit</a></li>
+		</ul>
+		</div>
 		<div class="normal save-par">
-			<h3>Save a session</h3>
+			<h3 id="save">Save a session</h3>
 			<p>
 			Open the popup and enter a name for the session in the "name" text field
 			<div class=sep-img>
@@ -41,28 +52,28 @@
 			</p>
 		</div>
 		<div class="normal restore-par">
-				<h3>Restoring</h3>
+				<h3 id="restore">Restoring</h3>
 				<p>
 				To restore an already saved session, click on the <img class="start buttons" src="../images/start.svg" width="24px" height="24px"/> button on the row of
 				the session to restore. A new window will appear loading all the stored tabs.
 				</p>
 		</div>
 		<div class="normal del-par">
-				<h3>Delete</h3>
+				<h3 id="del">Delete</h3>
 				<p>
 				To delete a session click the <img class="thrash buttons" src="../images/delete.svg" width="24px" height="24px"/> button on the row of the session to delete.
 				A dialog will ask for a confirmation.
 				</p>
 		</div>
 		<div class="normal manage-par">
-				<h3>Management</h3>
+				<h3 id="manage">Management</h3>
 				<p>
 				You can sort your sessions by simply drag the session you want to move and dropping
 				it in the new position.
 				</p>
 		</div>
 		<div class="normal export-par">
-				<h3>Exporting/Importing session data</h3>
+				<h3 id="export">Exporting/Importing session data</h3>
 				<p>
 				By clicking on the <img class="option buttons" src="../images/settings.svg" width="24px" height="24px"/> button, the extension option page will be shown.
 				In this page you can export all the saved session in a JSON file.
@@ -73,7 +84,7 @@
 				</p>
 		</div>
 		<div class="normal edit-par">
-				<h3>Edit</h3>
+				<h3 id="edit">Edit</h3>
 				<p>
 				To edit a session click the <img class="edit buttons" src="../images/edit.svg" width="24px" height="24px"/> button of the session you want to change. It will open the edit page for the session. 
 				<div class=sep-img>
