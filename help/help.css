@@ -13,10 +13,18 @@ h1 {
 }
 */
 
+.buttons {
+	padding: 4px;
+}
+
 .save {
 	border-color: #4CAF50;
 	background-color: #4CAF50;
-	padding: 4px;
+}
+
+.start {
+	border-color: #4CAF50;
+	background-color: #4CAF50;
 }
 
 .uri-scheme {
