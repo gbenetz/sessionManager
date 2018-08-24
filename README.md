@@ -32,8 +32,8 @@ Not implemented yet.
 ### Exporting/Importing session data
 By clicking on the "option" button, the extension option page will be shown.
 In this page you can export all the saved session in a JSON file.
-You can also import data in the form of a JSON file. If the file don' adhere to
-the correct format the import porcess will be aborted.
+You can also import data in the form of a JSON file. If the file don't adhere to
+the correct format the import process will be aborted.
 By importing a session file all the saved data will be overwritten by the imported
 data.
 
