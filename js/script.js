@@ -380,6 +380,7 @@ function checkAndStoreTabs(tabs, name, overwrite) {
 		addSessionToPopup(session);
 	} else {
 		var index = sessions.findIndex(e => e.name == name);
+		session.index = index;
 		sessions[index] = session;
 	}
 
