@@ -1,9 +1,55 @@
 h1 {
-	text-align: center
+	text-align: center;
+}
+
+h3 { 
+  margin: 4px;
+}
+
+p {
+	margin: 2px;
+}
+
+.normal {
+	border: solid white 2px;
+	border-radius: 10px;
+	background-color: white;
+	margin-bottom: 20px;
+}
+
+.save-par {
+	border-color: #c7c738;
+	background-color: beige;
+}
+
+.restore-par {
+	border-color: blue;
+	background-color: #ccccff;
+}
+
+.del-par {
+	border-color: blueviolet;
+	background-color: #e6d2f9;
+}
+
+.manage-par {
+	border-color: yellowgreen;
+	background-color: #d6ebad;
+}
+
+.export-par {
+	border-color: yellow;
+	background-color: #ffffb3;
+}
+
+.edit-par {
+	border-color: crimson;
+	background-color: #f6a2b3;
 }
 
 .center {
-	text-align: center
+	text-align: center;
+	
 }
 
 /*.save-pane-img {
@@ -30,6 +76,16 @@ h1 {
 .thrash {
 	border-color: #f00;
 	background-color: #f00;
+}
+
+.option {
+	background-color: white;
+	border-color: white;
+}
+
+.edit {
+	background-color: #ffcc00;
+	border-color: #ffcc00;
 }
 
 .uri-scheme {
