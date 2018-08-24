@@ -27,7 +27,10 @@ You can sort your sessions by simply drag the session you want to move and dropp
 it in the new position.
 
 ### Edit
-Not implemented yet.
+To edit a session click the edit button (the notebook button) of the session you
+want to change. It will open the edit page for the session. 
+Here you can change the session name, change the title and the url of each saved
+tab, sort the tabs in different order, and add or delete tabs.
 
 ### Exporting/Importing session data
 By clicking on the "option" button, the extension option page will be shown.
