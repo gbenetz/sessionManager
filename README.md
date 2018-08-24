@@ -11,7 +11,7 @@ the "save" button. All the tabs in the current window will be saved under a new
 session. Tabs with an url begining with file, about, data, javascript, chrome or
 moz-extension are not saved because Firefox don't allow an extension to restore them.
 When the new session is stored a row with the name of the new session is shown.
-If the chosen name still exits, the extension will ask if you want to overwrite
+If the chosen name exits, the extension will ask if you want to overwrite
 the existing session.
 
 ### Restoring
