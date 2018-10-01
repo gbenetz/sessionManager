@@ -372,7 +372,8 @@ function getSingleTab(tabDiv) {
 	var url = "";
 	var urlIn = null;
 	var re = /^(about:|file:|moz-extension:javascript:|data:|chrome:)/;
-	for (let c of tabDiv.children) {
+	var dataBox = tabDiv.getElementsByClassName("dataBox")[0];
+	for (let c of dataBox.children) {
 		var input = c.getElementsByTagName("input")[0];
 		if (input == undefined)
 			continue;
@@ -567,7 +568,7 @@ window.addEventListener("load", (e) => {
 });
 
 window.onbeforeunload = function(e) {
-	var dialogText = "There's unsaved changes. Do you wnat to quit?";
+	var dialogText = "There's unsaved changes. Do you want to quit?";
 	if (!unsaved) {
 		return undefined;
 	}
