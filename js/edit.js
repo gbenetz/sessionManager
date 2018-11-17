@@ -428,18 +428,17 @@ function disableButtons() {
  * Event listener that saves data back to the browser storage data
  */
 function saveData(ev) {
-	var header = document.getElementById("header");
-	var name = header.children[0].value;
+	var name = document.getElementById("name");
 	var container = document.getElementById("container");
 	var index = sessionIndex;
 	var tabs = [];
 	var msgDiv = document.getElementById("msg");
 	var inputs;
 
-	if (name == "") {
+	if (name.value == "") {
 		showMessage(msgDiv, "Name is empty", "red", 10);
 		return;
-	} else {
+	} else if (name.value != name.defaultValue){
 		let flag = sessions.find((s) => {
 			return s.name == name;
 		});
@@ -470,7 +469,7 @@ function saveData(ev) {
 	}
 
 	sessions[index].tabs = tabs;
-	sessions[index].name = name;
+	sessions[index].name = name.value;
 	browser.storage.local.set({sessions : sessions}).catch(onError);
 	// the following change the default value to prevent the cancel button
 	// to restore the original value. Now we use the saved one
