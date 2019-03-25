@@ -61,7 +61,9 @@ function createSessionCmds(name) {
 			   "start",
 			   createIcon("start", "24px", "24px"),
 			   "Start the session");
-	btn.addEventListener("click", startSession);
+	btn.addEventListener("click", (e) => {
+		startSession(name);
+	});
 	cmds.appendChild(btn);
 	btn = createButton("session",
 			   "edit",
@@ -413,11 +415,10 @@ function saveSession(ev) {
 /**
  * Starts a saved session
  *
- * ev is the event that triggered the session start
+ * name is the name of the session to start
  */
-function startSession(ev) {
+function startSession(name) {
 	var creating;
-	var name = ev.target.parentNode.getAttribute("session");
 	var session = sessions.find((element) => {
 		return element.name == name;
 	});
