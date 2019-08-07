@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 var sessions = [];
+var msgPane = null;
 
 /**
  * Creates the div that contains all the session commands
@@ -173,27 +174,6 @@ function addSessionToPopup(session) {
 }
 
 /**
- * Shows a message in the message pane
- *
- * message is the text to show
- * timeout is the number of seconds the message has to be shown
- */
-function showMessage(message, timeout) {
-	var msg = document.getElementsByClassName("message")[0];
-	var div = document.createElement("div");
-	div.className = "text";
-	div.style.color = "red";
-	div.style.borderBottom = "thin solid black";
-	//div.style.borderBottomColor = "solid";
-	var text = document.createTextNode(message);
-	div.appendChild(text);
-	msg.appendChild(div);
-	window.setTimeout(() => {
-		msg.removeChild(div);
-	}, timeout * 1000);
-}
-
-/**
  * Creates a generic dialog with a message and some buttons
  *
  * message is the message to show
@@ -331,12 +311,18 @@ function checkAndStoreTabs(tabs, name, overwrite) {
 		return !flag;
 	});
 	if (filteredTabs.length == 0) {
-		showMessage("All tabs are privileged ones: session not saved", 10);
+		showMessage(msgPane,
+			    "All tabs are privileged ones: session not saved",
+			    "red",
+			    10);
 		return;
 	}
 
 	if (filteredTabs.length != tabs.length) {
-		showMessage("Some tabs omitted because their urls are privileged ones", 10);
+		showMessage(msgPane,
+			   "Some tabs omitted because their urls are privileged ones",
+			   "red",
+			   10);
 	}
 	session.tabs = filteredTabs.map((tab, index) => {
 		return {title: tab.title, url: tab.url, index: index};
@@ -362,7 +348,7 @@ function saveSession(ev) {
 	var nameTextBox = document.getElementsByName("session-name")[0];
 	name = nameTextBox.value;
 	if (name == "") {
-		showMessage("The name is required", 10);
+		showMessage(msgPane, "The name is required", "red", 10);
 		return;
 	}
 	nameTextBox.value = "";
@@ -520,6 +506,7 @@ function handleVisualThings() {
  * the already saved session
  */
 window.addEventListener("load", (e) => {
+	msgPane = document.getElementsByClassName("message")[0];
 	/*
 	 * Add the eventListener to the save button
 	 */
