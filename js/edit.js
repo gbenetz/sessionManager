@@ -90,27 +90,6 @@ function drop(ev) {
 }
 
 /**
- * Create an img with the specified icon and size
- *
- * type		is the name of the icon. Must be one of the svg files in the
- * 		images dir.
- * 		type must be the name without the .svg suffix.
- * width	width of the icon. Must be a string suitable for the width
- * 		attribute.
- * height	height of the icon. Must be a string suitable for the height
- * 		attribute.
- */
-function createIcon(type, width, height) {
-	var icon = document.createElement("img")
-	icon.setAttribute("src", "../images/" + type + ".svg");
-	icon.setAttribute("width", width);
-	icon.setAttribute("height", height);
-	icon.className = "icon";
-	icon.setAttribute("draggable", false);
-	return icon;
-}
-
-/**
  * Creates a row for tab data
  *
  * tab is an object containing:
@@ -131,7 +110,7 @@ function createTabRow(tab) {
 	var empty = document.createElement("div");
 	var deleteDiv, btn;
 	iconDiv.className = "iconBox";
-	iconDiv.appendChild(createIcon("drag", 25, 25));
+	iconDiv.appendChild(createIcon("drag", 25, 25, false));
 	empty.className = "empty";
 	empty.appendChild(document.createTextNode("\xA0"));
 	iconDiv.appendChild(empty);
@@ -173,7 +152,7 @@ function createTabRow(tab) {
 	empty.appendChild(document.createTextNode("\xA0"));
 	btn = createButton("row",
 			   "delete",
-			   createIcon("delete", "24px", "24px"),
+			   createIcon("delete", "24px", "24px", false),
 			   "Delete the tab");
 	btn.addEventListener("click", deleteListener);
 	deleteDiv.appendChild(empty);

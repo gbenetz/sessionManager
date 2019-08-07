@@ -18,3 +18,26 @@ function createButton(type, cmd, content, tooltip) {
 	return btn;
 
 }
+
+/**
+ * Create an img with the specified icon and size
+ *
+ * type		is the name of the icon. Must be one of the svg files in the
+ * 		images dir.
+ * 		type must be the name without the .svg suffix.
+ * width	width of the icon. Must be a string suitable for the width
+ * 		attribute.
+ * height	height of the icon. Must be a string suitable for the height
+ * 		attribute.
+ * draggable	value of the draggable property. Default true
+ */
+function createIcon(type, width, height, draggable = true) {
+	var icon = document.createElement("img")
+	icon.setAttribute("src", "../images/" + type + ".svg");
+	icon.setAttribute("width", width);
+	icon.setAttribute("height", height);
+	icon.className = "icon";
+	icon.setAttribute("draggable", draggable);
+	return icon;
+}
+
