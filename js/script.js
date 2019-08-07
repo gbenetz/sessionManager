@@ -495,7 +495,6 @@ function onError(error) {
  * data the data retrieved
  */
 function onGot(data) {
-	console.log(data);
 	if (data.hasOwnProperty("sessions")) {
 		sessions = data.sessions;
 		for (let session of sessions) {
@@ -536,6 +535,12 @@ window.addEventListener("load", (e) => {
 	/*
 	 * Load the already saved session (if any)
 	 */
-	browser.storage.local.get("sessions").then(onGot).catch(onError);
+	browser.storage.local.get("sessions")
+	.then(onGot)
+	.then(((se) => {
+		console.log(se);
+		return Promise.resolve(null);
+	}))
+	.catch(onError);
 });
 
