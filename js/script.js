@@ -74,38 +74,18 @@ function createSessionRow(name, oddRow) {
 	return row;
 }
 
-/**
- * Event handler that allows the drop of an object on the target
- */
-function allowDrop(ev) {
-	ev.preventDefault();
-}
 
-/**
- * Event handler that manages the daragging of a session row
+/*
+ * Callback functions used by the drag and drop interface
  */
-function drag(ev) {
-	ev.dataTransfer.setData("index", ev.target.getAttribute("index"));
-}
-
-/**
- * Event handler that manages the dropping of a session row on another.
- * It manages also the sessions indexes.
- */
-function drop(ev) {
-	ev.preventDefault();
-	var indexDrag = Number.parseInt(ev.dataTransfer.getData("index"), 10);
-	var indexDrop, dropped = ev.target;
-
+function findDropped(dropped) {
 	while (dropped.className != "container")
 		dropped = dropped.parentElement;
 
-	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
-	if (indexDrag == indexDrop)
-		return;
+	return dropped;
+}
 
-	var divs = document.getElementsByClassName("container");
-	var dragged;
+function preDrop(indexDrag, indexDrop) {
 	var session = sessions[indexDrag];
 	sessions.splice(indexDrag, 1);
 	sessions.splice(indexDrop, 0, session);
@@ -113,44 +93,23 @@ function drop(ev) {
 		el.index = index;
 	});
 	console.log(sessions);
+}
 
-	var container = document.getElementById("sessions-container");
-	for (let div of divs) {
-		var index = Number.parseInt(div.getAttribute("index"), 10);
-		if (index == indexDrag) {
-			dragged = div;
-			div.setAttribute("index", indexDrop);
-		} else {
-			if (indexDrop > indexDrag) {
-				if (index == indexDrop + 1) {
-					dropped = div;
-				} else if (index > indexDrag &&
-					   index <= indexDrop) {
-					div.setAttribute("index", index - 1);
-				} else
-					continue;
-			} else {
-				if (index >= indexDrop && index < indexDrag) {
-					div.setAttribute("index", index + 1);
-				} else
-					continue;
-			}
-		}
-		var cls = div.firstChild.className;
-		var newIndex = Number.parseInt(div.getAttribute("index"), 10);
-		if ((newIndex & 1) == 0)
-			div.firstChild.className = cls.replace("odd", "even");
-		else
-			div.firstChild.className = cls.replace("even", "odd");
+function getChild(div) {
+	return div.firstChild;
+}
 
-	}
-	if (indexDrop == sessions.length - 1)
-		container.appendChild(dragged);
-	else
-		container.insertBefore(dragged, dropped);
+function getLength() {
+	return sessions.length;
+}
+
+function postDrop(indexDrag, indexDrop) {
 	browser.storage.local.set({sessions : sessions}).catch(onError);
 }
 
+function getDivs() {
+	return document.getElementsByClassName("container");
+}
 
 /**
  * Adds a row containing a session
@@ -168,7 +127,17 @@ function addSessionToPopup(session) {
 	newDiv.setAttribute("draggable", "true");
 	newDiv.addEventListener("dragstart", drag);
 	newDiv.addEventListener("dragover", allowDrop);
-	newDiv.addEventListener("drop", drop);
+	newDiv.addEventListener("drop", (ev) => {
+		var funcs = {};
+		var cont, divs;
+		funcs.findDropped = findDropped;
+		funcs.getDivs = getDivs;
+		funcs.getChild = getChild;
+		funcs.preDrop = preDrop;
+		funcs.postDrop = postDrop;
+		funcs.getLength = getLength;
+		drop(ev, container, funcs);
+	});
 	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
 }
