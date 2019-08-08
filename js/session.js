@@ -110,6 +110,9 @@ function postDrop(indexDrag, indexDrop) {
 function getDivs() {
 	return document.getElementsByClassName("container");
 }
+/*
+ * End of drag and drop callbacks
+ */
 
 /**
  * Adds a row containing a session
@@ -140,33 +143,6 @@ function addSessionToPopup(session) {
 	});
 	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
-}
-
-/**
- * Creates a generic dialog with a message and some buttons
- *
- * message is the message to show
- * buttons is an array of buttons to be added to the dialog
- *
- * Returns:
- * the newly created dialog
- */
-function createGenericDialog(message, buttons) {
-	var dialog = document.createElement("dialog");
-	dialog.setAttribute("open", "");
-	dialog.id = "dialog";
-	var div = document.createElement("div");
-	div.className = "text";
-	div.appendChild(document.createTextNode(message));
-	dialog.appendChild(div);
-	div = document.createElement("div");
-	div.className = "dialog-commands";
-	for (let btn of buttons) {
-		div.appendChild(btn);
-	}
-
-	dialog.appendChild(div);
-	return dialog;
 }
 
 /**
