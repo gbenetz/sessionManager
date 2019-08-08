@@ -17,3 +17,12 @@ function onGot(data) {
 	return Promise.resolve(sessions);
 }
 
+/**
+ * Print the error on the console
+ *
+ * error the error occurred
+ */
+function onError(error) {
+	console.log(`Error: ${error}`);
+}
+

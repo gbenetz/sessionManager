@@ -409,15 +409,6 @@ function openHelpPage(ev) {
 	creating.then((tab) => {}).catch(onError);
 }
 
-/**
- * Print the error on the console
- *
- * error the error occurred
- */
-function onError(error) {
-	console.log(`Error: ${error}`);
-}
-
 function loadSessions(se) {
 	for (let session of sessions) {
 		addSessionToPopup(session);
