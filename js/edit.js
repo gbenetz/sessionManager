@@ -16,77 +16,35 @@ const NOURL = 1;
 const NOTITLE = 2;
 const INVURL = 3;
 
-/**
- * Event handler that allows the drop of an object on the target
+/*
+ * Callback functions used by the drag and drop interface
  */
-function allowDrop(ev) {
-	ev.preventDefault();
-}
-
-/**
- * Event handler that manages the dragging of a session row
- */
-function drag(ev) {
-	ev.dataTransfer.setData("index", ev.target.getAttribute("index"));
-}
-
-/**
- * Event handler that manages the dropping of a session row on another.
- * It manages also the sessions indexes.
- */
-function drop(ev) {
-	ev.preventDefault();
-	var indexDrag = Number.parseInt(ev.dataTransfer.getData("index"), 10);
-	var indexDrop, dropped = ev.target;
-	var divs = document.getElementsByClassName("tab");
-	var dragged;
-	var session = sessions[indexDrag];
-	var container = document.getElementById("container");
-
+function findDropped(dropped) {
 	while (!dropped.className.includes("tab"))
 		dropped = dropped.parentElement;
+	
+	return dropped;
+}
+	
+function preDrop(indexDrag, indexDrop) {
+	return null;
+}
 
-	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
-	if (indexDrag == indexDrop)
-		return;
+function getChild(div) {
+	return div;
+}
 
-	for (let div of divs) {
-		var index = Number.parseInt(div.getAttribute("index"), 10);
-		var cls, newIndex;
-		if (index == indexDrag) {
-			dragged = div;
-			div.setAttribute("index", indexDrop);
-		} else {
-			if (indexDrop > indexDrag) {
-				if (index == indexDrop + 1) {
-					dropped = div;
-				} else if (index > indexDrag &&
-					   index <= indexDrop) {
-					div.setAttribute("index", index - 1);
-				} else
-					continue;
-			} else {
-				if (index >= indexDrop && index < indexDrag) {
-					div.setAttribute("index", index + 1);
-				} else
-					continue;
-			}
-		}
-		cls = div.className;
-		newIndex = Number.parseInt(div.getAttribute("index"), 10);
-		if ((newIndex & 1) == 0)
-			div.className = cls.replace("odd", "even");
-		else
-			div.className = cls.replace("even", "odd");
+function getLength() {
+	return sessions[sessionIndex].tabs.length;
+}
 
-	}
-	if (indexDrop == sessions.length - 1)
-		container.appendChild(dragged);
-	else
-		container.insertBefore(dragged, dropped);
-
+function postDrop(indexDrag, indexDrop) {
 	unsaved = true;
 	enableButtons();
+}
+
+function getDivs() {
+	return document.getElementsByClassName("tab");
 }
 
 /**
@@ -126,7 +84,17 @@ function createTabRow(tab) {
 	newDiv.setAttribute("draggable", "true");
 	newDiv.addEventListener("dragstart", drag);
 	newDiv.addEventListener("dragover", allowDrop);
-	newDiv.addEventListener("drop", drop);
+	newDiv.addEventListener("drop", (ev) => {
+		var funcs = {};
+		var cont, divs;
+		funcs.findDropped = findDropped;
+		funcs.getDivs = getDivs;
+		funcs.getChild = getChild;
+		funcs.preDrop = preDrop;
+		funcs.postDrop = postDrop;
+		funcs.getLength = getLength;
+		drop(ev, document.getElementById("container"), funcs);
+	});
 	titDiv.className = "titleBox"
 	title.type = "text";
 	title.defaultValue = tab.title;
