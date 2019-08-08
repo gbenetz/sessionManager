@@ -5,7 +5,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var sessions = [];
 var sessionName = "";
 var sessionIndex = -1;
 var trash = [];
@@ -46,6 +45,8 @@ function postDrop(indexDrag, indexDrop) {
 function getDivs() {
 	return document.getElementsByClassName("tab");
 }
+
+/* End of drag and drop callbacks */
 
 /**
  * Creates a row for tab data
@@ -401,23 +402,6 @@ function saveData(ev) {
 }
 
 /**
- * Retrieves data from the storage.local.get Promise.
- * It sets up all the things to show the sessions
- *
- * data the data retrieved
- */
-function onGot(data) {
-	console.log(data);
-	if (data.hasOwnProperty("sessions")) {
-		sessions = data.sessions;
-	}
-	sessionIndex = sessions.findIndex((e) => {
-		return e.name == sessionName;
-	});
-	return Promise.resolve(sessions);
-}
-
-/**
  * Print the error on the console
  *
  * error the error occurred
@@ -432,7 +416,11 @@ function onError(error) {
 function onShow(se) {
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
-	var s = sessions[sessionIndex];
+	var s;
+	sessionIndex = sessions.findIndex((e) => {
+		return e.name == sessionName;
+	});
+	s = sessions[sessionIndex];
 	nameInput.defaultValue = sessionName;
 
 	for (let t of s.tabs) {

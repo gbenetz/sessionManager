@@ -4,7 +4,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-var sessions = [];
 var msgPane = null;
 
 /**
@@ -419,31 +418,21 @@ function onError(error) {
 	console.log(`Error: ${error}`);
 }
 
-/**
- * Retrieved data from the storage.local.get Promise.
- * It sets up all the things to show the sessions
- *
- * data the data retrieved
- */
-function onGot(data) {
-	if (data.hasOwnProperty("sessions")) {
-		sessions = data.sessions;
-		for (let session of sessions) {
-			addSessionToPopup(session);
-		}
+function loadSessions(se) {
+	for (let session of sessions) {
+		addSessionToPopup(session);
 	}
-	handleVisualThings();
-	return Promise.resolve(sessions);
+	return Promise.resolve(sessions)
 }
-
 /**
  * Put here all the code to handle visual stuff after the sessions data are
  * loaded in the popup
  */
-function handleVisualThings() {
+function handleVisualThings(se) {
 	var message = document.getElementsByClassName("message")[0];
 	var maxWidth = document.body.clientWidth;
 	message.style.maxWidth = (maxWidth + 1).toString() + "px";
+	return Promise.resolve(sessions);
 }
 
 /*
@@ -469,6 +458,8 @@ window.addEventListener("load", (e) => {
 	 */
 	browser.storage.local.get("sessions")
 	.then(onGot)
+	.then(loadSessions)
+	.then(handleVisualThings)
 	.then(((se) => {
 		console.log(se);
 		return Promise.resolve(null);
