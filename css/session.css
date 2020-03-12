@@ -11,8 +11,12 @@
 }
 
 body {
-    margin-right: 5px;
-    margin-left: 5px;
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+input[name="session-name"] {
+	min-width: 140px;
 }
 
 button {
