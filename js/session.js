@@ -4,46 +4,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-var sessions = [];
-/**
- * Creates a button
- *
- * type is a label that is applied to the class name
- * cmd is the type of command. This two parameters are used to create the class
- * of the new button in the form of 'type'-cmd 'cmd'-btn
- * content is an HTMLElement to be used as the "label" of the button
- * tooltip is the button tooltip text
- * Returns:
- * the newly created button
- */
-function createButton(type, cmd, content, tooltip) {
-	var btn = document.createElement("button");
-	btn.className = type + "-cmd " + cmd + "-btn";
-	btn.appendChild(content);
-	btn.title = tooltip;
-	return btn;
-
-}
-
-/**
- * Create an img with the specified icon and size
- *
- * type		is the name of the icon. Must be one of the svg files in the
- * 		images dir.
- * 		type must be the name without the .svg suffix.
- * width	width of the icon. Must be a string suitable for the width
- * 		attribute.
- * height	height of the icon. Must be a string suitable for the height
- * 		attribute.
- */
-function createIcon(type, width, height) {
-	var icon = document.createElement("img")
-	icon.setAttribute("src", "../images/" + type + ".svg");
-	icon.setAttribute("width", width);
-	icon.setAttribute("height", height);
-	icon.className = "icon";
-	return icon;
-}
+var msgPane = null;
 
 /**
  * Creates the div that contains all the session commands
@@ -112,38 +73,18 @@ function createSessionRow(name, oddRow) {
 	return row;
 }
 
-/**
- * Event handler that allows the drop of an object on the target
- */
-function allowDrop(ev) {
-	ev.preventDefault();
-}
 
-/**
- * Event handler that manages the daragging of a session row
+/*
+ * Callback functions used by the drag and drop interface
  */
-function drag(ev) {
-	ev.dataTransfer.setData("index", ev.target.getAttribute("index"));
-}
-
-/**
- * Event handler that manages the dropping of a session row on another.
- * It manages also the sessions indexes.
- */
-function drop(ev) {
-	ev.preventDefault();
-	var indexDrag = Number.parseInt(ev.dataTransfer.getData("index"), 10);
-	var indexDrop, dropped = ev.target;
-
+function findDropped(dropped) {
 	while (dropped.className != "container")
 		dropped = dropped.parentElement;
 
-	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
-	if (indexDrag == indexDrop)
-		return;
+	return dropped;
+}
 
-	var divs = document.getElementsByClassName("container");
-	var dragged;
+function preDrop(indexDrag, indexDrop) {
 	var session = sessions[indexDrag];
 	sessions.splice(indexDrag, 1);
 	sessions.splice(indexDrop, 0, session);
@@ -151,44 +92,26 @@ function drop(ev) {
 		el.index = index;
 	});
 	console.log(sessions);
+}
 
-	var container = document.getElementById("sessions-container");
-	for (let div of divs) {
-		var index = Number.parseInt(div.getAttribute("index"), 10);
-		if (index == indexDrag) {
-			dragged = div;
-			div.setAttribute("index", indexDrop);
-		} else {
-			if (indexDrop > indexDrag) {
-				if (index == indexDrop + 1) {
-					dropped = div;
-				} else if (index > indexDrag &&
-					   index <= indexDrop) {
-					div.setAttribute("index", index - 1);
-				} else
-					continue;
-			} else {
-				if (index >= indexDrop && index < indexDrag) {
-					div.setAttribute("index", index + 1);
-				} else
-					continue;
-			}
-		}
-		var cls = div.firstChild.className;
-		var newIndex = Number.parseInt(div.getAttribute("index"), 10);
-		if ((newIndex & 1) == 0)
-			div.firstChild.className = cls.replace("odd", "even");
-		else
-			div.firstChild.className = cls.replace("even", "odd");
+function getChild(div) {
+	return div.firstChild;
+}
 
-	}
-	if (indexDrop == sessions.length - 1)
-		container.appendChild(dragged);
-	else
-		container.insertBefore(dragged, dropped);
+function getLength() {
+	return sessions.length;
+}
+
+function postDrop(indexDrag, indexDrop) {
 	browser.storage.local.set({sessions : sessions}).catch(onError);
 }
 
+function getDivs() {
+	return document.getElementsByClassName("container");
+}
+/*
+ * End of drag and drop callbacks
+ */
 
 /**
  * Adds a row containing a session
@@ -206,57 +129,19 @@ function addSessionToPopup(session) {
 	newDiv.setAttribute("draggable", "true");
 	newDiv.addEventListener("dragstart", drag);
 	newDiv.addEventListener("dragover", allowDrop);
-	newDiv.addEventListener("drop", drop);
+	newDiv.addEventListener("drop", (ev) => {
+		var funcs = {};
+		var cont, divs;
+		funcs.findDropped = findDropped;
+		funcs.getDivs = getDivs;
+		funcs.getChild = getChild;
+		funcs.preDrop = preDrop;
+		funcs.postDrop = postDrop;
+		funcs.getLength = getLength;
+		drop(ev, container, funcs);
+	});
 	newDiv.appendChild(createSessionRow(session.name, odd));
 	container.appendChild(newDiv);
-}
-
-/**
- * Shows a message in the message pane
- *
- * message is the text to show
- * timeout is the number of seconds the message has to be shown
- */
-function showMessage(message, timeout) {
-	var msg = document.getElementsByClassName("message")[0];
-	var div = document.createElement("div");
-	div.className = "text";
-	div.style.color = "red";
-	div.style.borderBottom = "thin solid black";
-	//div.style.borderBottomColor = "solid";
-	var text = document.createTextNode(message);
-	div.appendChild(text);
-	msg.appendChild(div);
-	window.setTimeout(() => {
-		msg.removeChild(div);
-	}, timeout * 1000);
-}
-
-/**
- * Creates a generic dialog with a message and some buttons
- *
- * message is the message to show
- * buttons is an array of buttons to be added to the dialog
- *
- * Returns:
- * the newly created dialog
- */
-function createGenericDialog(message, buttons) {
-	var dialog = document.createElement("dialog");
-	dialog.setAttribute("open", "");
-	dialog.id = "dialog";
-	var div = document.createElement("div");
-	div.className = "text";
-	div.appendChild(document.createTextNode(message));
-	dialog.appendChild(div);
-	div = document.createElement("div");
-	div.className = "dialog-commands";
-	for (let btn of buttons) {
-		div.appendChild(btn);
-	}
-
-	dialog.appendChild(div);
-	return dialog;
 }
 
 /**
@@ -370,12 +255,18 @@ function checkAndStoreTabs(tabs, name, overwrite) {
 		return !flag;
 	});
 	if (filteredTabs.length == 0) {
-		showMessage("All tabs are privileged ones: session not saved", 10);
+		showMessage(msgPane,
+			    "All tabs are privileged ones: session not saved",
+			    "red",
+			    10);
 		return;
 	}
 
 	if (filteredTabs.length != tabs.length) {
-		showMessage("Some tabs omitted because their urls are privileged ones", 10);
+		showMessage(msgPane,
+			   "Some tabs omitted because their urls are privileged ones",
+			   "red",
+			   10);
 	}
 	session.tabs = filteredTabs.map((tab, index) => {
 		return {title: tab.title, url: tab.url, index: index};
@@ -401,7 +292,7 @@ function saveSession(ev) {
 	var nameTextBox = document.getElementsByName("session-name")[0];
 	name = nameTextBox.value;
 	if (name == "") {
-		showMessage("The name is required", 10);
+		showMessage(msgPane, "The name is required", "red", 10);
 		return;
 	}
 	nameTextBox.value = "";
@@ -518,41 +409,21 @@ function openHelpPage(ev) {
 	creating.then((tab) => {}).catch(onError);
 }
 
-/**
- * Print the error on the console
- *
- * error the error occurred
- */
-function onError(error) {
-	console.log(`Error: ${error}`);
-}
-
-/**
- * Retrieved data from the storage.local.get Promise.
- * It sets up all the things to show the sessions
- *
- * data the data retrieved
- */
-function onGot(data) {
-	console.log(data);
-	if (data.hasOwnProperty("sessions")) {
-		sessions = data.sessions;
-		for (let session of sessions) {
-			addSessionToPopup(session);
-		}
+function loadSessions(se) {
+	for (let session of sessions) {
+		addSessionToPopup(session);
 	}
-	handleVisualThings();
-	return Promise.resolve(sessions);
+	return Promise.resolve(sessions)
 }
-
 /**
  * Put here all the code to handle visual stuff after the sessions data are
  * loaded in the popup
  */
-function handleVisualThings() {
+function handleVisualThings(se) {
 	var message = document.getElementsByClassName("message")[0];
 	var maxWidth = document.body.clientWidth;
 	message.style.maxWidth = (maxWidth + 1).toString() + "px";
+	return Promise.resolve(sessions);
 }
 
 /*
@@ -560,6 +431,7 @@ function handleVisualThings() {
  * the already saved session
  */
 window.addEventListener("load", (e) => {
+	msgPane = document.getElementsByClassName("message")[0];
 	/*
 	 * Add the eventListener to the save button
 	 */
@@ -575,6 +447,14 @@ window.addEventListener("load", (e) => {
 	/*
 	 * Load the already saved session (if any)
 	 */
-	browser.storage.local.get("sessions").then(onGot).catch(onError);
+	browser.storage.local.get("sessions")
+	.then(onGot)
+	.then(loadSessions)
+	.then(handleVisualThings)
+	.then(((se) => {
+		console.log(se);
+		return Promise.resolve(null);
+	}))
+	.catch(onError);
 });
 
