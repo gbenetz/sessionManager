@@ -10,6 +10,11 @@
 	flex-wrap: nowrap;
 }
 
+body {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
 button {
 	padding-left: 0px;
 	padding-right: 0px;
