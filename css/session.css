@@ -22,7 +22,7 @@ input[name="session-name"] {
 button {
 	padding-left: 0px;
 	padding-right: 0px;
-	margin-left: 3px;
+	margin-right: 3px;
 	border-left-width: 2px;
 	border-right-width: 2px;
 	border-style: solid;
@@ -104,8 +104,8 @@ button:disabled:hover {
 }
 
 .commands {
-	text-align: right;
-	flex-grow: 1;
+	text-align: left;
+	flex-grow: 0;
 }
 
 #dialog {
@@ -135,4 +135,8 @@ button:disabled:hover {
 	display: flex;
 	flex-direction: column-reverse;
 
+}
+
+.text {
+	margin-left: 2px;
 }

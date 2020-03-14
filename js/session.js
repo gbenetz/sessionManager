@@ -62,14 +62,11 @@ function createSessionRow(name, oddRow) {
 		row.className += "odd-row";
 	else
 		row.className += "even-row";
-	empty = document.createElement("div");
-	empty.className = "empty";
-	row.appendChild(empty);
+	row.appendChild(createSessionCmds(name));
 	text = document.createElement("div");
 	text.className = "text";
-	text.appendChild(document.createTextNode(name));
+	text.appendChild(document.createTextNode("   " + name));
 	row.appendChild(text);
-	row.appendChild(createSessionCmds(name));
 	return row;
 }
 
