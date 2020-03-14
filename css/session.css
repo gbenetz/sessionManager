@@ -54,6 +54,8 @@ button:disabled:hover {
 #session-save {
 	border-color: #4CAF50;
 	background-color: #4CAF50;
+	padding-right: 5px;
+	margin-left: 2px;
 }
 
 .start-btn {
@@ -139,4 +141,29 @@ button:disabled:hover {
 
 .text {
 	margin-left: 2px;
+}
+
+.header {
+	height: 36px;
+	width: 250px;
+	position: fixed;
+	top: 0;
+	background: whitesmoke;
+
+}
+
+.footer {
+	height: 32px;
+	width: 260px;
+	position: fixed;
+	bottom: 0;
+	background: whitesmoke;
+
+}
+#sessions-container {
+	width: 260px;
+	margin-top: 36px;
+	margin-bottom: 32px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
