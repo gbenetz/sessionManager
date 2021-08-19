@@ -17,7 +17,7 @@ HELP = $(shell find help -mindepth 1 ! -name '.*swp' -type f)
 
 all: $(PKG)
 
-$(PKG): $(MAN) $(HTML) $(JS) $(CSS) $(ICO) $(IMG) $(HELP) README.md
+$(PKG): $(MAN) $(HTML) $(JS) $(CSS) $(ICO) $(IMG) $(HELP) README.md LICENSE
 	@echo $^
 	$(ZIP) -u $(PKG) $^
 
