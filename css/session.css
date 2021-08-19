@@ -10,10 +10,20 @@
 	flex-wrap: nowrap;
 }
 
+body {
+	margin-right: 5px;
+	margin-left: 5px;
+    min-height: 200px;
+}
+
+input[name="session-name"] {
+	min-width: 140px;
+}
+
 button {
 	padding-left: 0px;
 	padding-right: 0px;
-	margin-left: 3px;
+	margin-right: 3px;
 	border-left-width: 2px;
 	border-right-width: 2px;
 	border-style: solid;
@@ -45,6 +55,8 @@ button:disabled:hover {
 #session-save {
 	border-color: #4CAF50;
 	background-color: #4CAF50;
+	padding-right: 5px;
+	margin-left: 2px;
 }
 
 .start-btn {
@@ -95,8 +107,10 @@ button:disabled:hover {
 }
 
 .commands {
-	text-align: right;
-	flex-grow: 1;
+	text-align: left;
+	flex-grow: 0;
+	display: flex;
+	flex-wrap: nowrap;
 }
 
 #dialog {
@@ -126,4 +140,32 @@ button:disabled:hover {
 	display: flex;
 	flex-direction: column-reverse;
 
+}
+
+.text {
+	margin-left: 2px;
+}
+
+.header {
+	height: 36px;
+	width: 250px;
+	position: fixed;
+	top: 0;
+	background: whitesmoke;
+
+}
+
+.footer {
+	width: 260px;
+	position: fixed;
+	bottom: 0;
+	background: whitesmoke;
+
+}
+#sessions-container {
+	width: 260px;
+	margin-top: 36px;
+	margin-bottom: 32px;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
