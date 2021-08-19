@@ -387,7 +387,7 @@ function deleteSession(name) {
 }
 
 function openEditPage(name) {
-	var extURL = browser.extension.getURL("");
+	var extURL = browser.runtime.getURL("");
 	var url = encodeURI(extURL + "/html/edit.html?session=" + name);
 	var creating = browser.tabs.create({
 		url : url,
@@ -397,7 +397,7 @@ function openEditPage(name) {
 }
 
 function openHelpPage(ev) {
-	var extURL = browser.extension.getURL("");
+	var extURL = browser.runtime.getURL("");
 	var url = encodeURI(extURL + "/help/help.html");
 	var creating = browser.tabs.create({
 		url : url,
