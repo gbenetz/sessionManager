@@ -5,7 +5,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var sessions = [];
 var sessionName = "";
 var sessionIndex = -1;
 var trash = [];
@@ -16,119 +15,38 @@ const NOURL = 1;
 const NOTITLE = 2;
 const INVURL = 3;
 
-/**
- * Event handler that allows the drop of an object on the target
+/*
+ * Callback functions used by the drag and drop interface
  */
-function allowDrop(ev) {
-	ev.preventDefault();
-}
-
-/**
- * Event handler that manages the dragging of a session row
- */
-function drag(ev) {
-	ev.dataTransfer.setData("index", ev.target.getAttribute("index"));
-}
-
-/**
- * Event handler that manages the dropping of a session row on another.
- * It manages also the sessions indexes.
- */
-function drop(ev) {
-	ev.preventDefault();
-	var indexDrag = Number.parseInt(ev.dataTransfer.getData("index"), 10);
-	var indexDrop, dropped = ev.target;
-	var divs = document.getElementsByClassName("tab");
-	var dragged;
-	var session = sessions[indexDrag];
-	var container = document.getElementById("container");
-
+function findDropped(dropped) {
 	while (!dropped.className.includes("tab"))
 		dropped = dropped.parentElement;
+	
+	return dropped;
+}
+	
+function preDrop(indexDrag, indexDrop) {
+	return null;
+}
 
-	indexDrop = Number.parseInt(dropped.getAttribute("index"), 10);
-	if (indexDrag == indexDrop)
-		return;
+function getChild(div) {
+	return div;
+}
 
-	for (let div of divs) {
-		var index = Number.parseInt(div.getAttribute("index"), 10);
-		var cls, newIndex;
-		if (index == indexDrag) {
-			dragged = div;
-			div.setAttribute("index", indexDrop);
-		} else {
-			if (indexDrop > indexDrag) {
-				if (index == indexDrop + 1) {
-					dropped = div;
-				} else if (index > indexDrag &&
-					   index <= indexDrop) {
-					div.setAttribute("index", index - 1);
-				} else
-					continue;
-			} else {
-				if (index >= indexDrop && index < indexDrag) {
-					div.setAttribute("index", index + 1);
-				} else
-					continue;
-			}
-		}
-		cls = div.className;
-		newIndex = Number.parseInt(div.getAttribute("index"), 10);
-		if ((newIndex & 1) == 0)
-			div.className = cls.replace("odd", "even");
-		else
-			div.className = cls.replace("even", "odd");
+function getLength() {
+	return sessions[sessionIndex].tabs.length;
+}
 
-	}
-	if (indexDrop == sessions.length - 1)
-		container.appendChild(dragged);
-	else
-		container.insertBefore(dragged, dropped);
-
+function postDrop(indexDrag, indexDrop) {
 	unsaved = true;
 	enableButtons();
 }
 
-/**
- * Create an img with the specified icon and size
- *
- * type		is the name of the icon. Must be one of the svg files in the
- * 		images dir.
- * 		type must be the name without the .svg suffix.
- * width	width of the icon. Must be a string suitable for the width
- * 		attribute.
- * height	height of the icon. Must be a string suitable for the height
- * 		attribute.
- */
-function createIcon(type, width, height) {
-	var icon = document.createElement("img")
-	icon.setAttribute("src", "../images/" + type + ".svg");
-	icon.setAttribute("width", width);
-	icon.setAttribute("height", height);
-	icon.className = "icon";
-	icon.setAttribute("draggable", false);
-	return icon;
+function getDivs() {
+	return document.getElementsByClassName("tab");
 }
 
-/**
- * Creates a button
- *
- * type is a label that is applied to the class name
- * cmd is the type of command. This two parameters are used to create the class
- * of the new button in the form of 'type'-cmd 'cmd'-btn
- * content is an HTMLElement to be used as the "label" of the button
- * tooltip is the button tooltip text
- * Returns:
- * the newly created button
- */
-function createButton(type, cmd, content, tooltip) {
-	var btn = document.createElement("button");
-	btn.className = type + "-cmd " + cmd + "-btn";
-	btn.appendChild(content);
-	btn.title = tooltip;
-	return btn;
-
-}
+/* End of drag and drop callbacks */
 
 /**
  * Creates a row for tab data
@@ -151,7 +69,7 @@ function createTabRow(tab) {
 	var empty = document.createElement("div");
 	var deleteDiv, btn;
 	iconDiv.className = "iconBox";
-	iconDiv.appendChild(createIcon("drag", 25, 25));
+	iconDiv.appendChild(createIcon("drag", 25, 25, false));
 	empty.className = "empty";
 	empty.appendChild(document.createTextNode("\xA0"));
 	iconDiv.appendChild(empty);
@@ -167,7 +85,17 @@ function createTabRow(tab) {
 	newDiv.setAttribute("draggable", "true");
 	newDiv.addEventListener("dragstart", drag);
 	newDiv.addEventListener("dragover", allowDrop);
-	newDiv.addEventListener("drop", drop);
+	newDiv.addEventListener("drop", (ev) => {
+		var funcs = {};
+		var cont, divs;
+		funcs.findDropped = findDropped;
+		funcs.getDivs = getDivs;
+		funcs.getChild = getChild;
+		funcs.preDrop = preDrop;
+		funcs.postDrop = postDrop;
+		funcs.getLength = getLength;
+		drop(ev, document.getElementById("container"), funcs);
+	});
 	titDiv.className = "titleBox"
 	title.type = "text";
 	title.defaultValue = tab.title;
@@ -193,7 +121,7 @@ function createTabRow(tab) {
 	empty.appendChild(document.createTextNode("\xA0"));
 	btn = createButton("row",
 			   "delete",
-			   createIcon("delete", "24px", "24px"),
+			   createIcon("delete", "24px", "24px", false),
 			   "Delete the tab");
 	btn.addEventListener("click", deleteListener);
 	deleteDiv.appendChild(empty);
@@ -318,25 +246,6 @@ function resetPage(ev) {
 
 	unsaved = false;
 	disableButtons();
-}
-
-/**
- * Shows a message in the specified message pane with the specified color
- *
- * div the message pane to use
- * message is the text to show
- * color the color of the message
- * timeout is the number of seconds the message has to be shown
- */
-function showMessage(div, message, color, timeout) {
-	var text;
-	text = document.createElement("p");
-	text.appendChild(document.createTextNode(message));
-	text.style.color = color;
-	div.appendChild(text);
-	window.setTimeout(() => {
-		div.removeChild(text);
-	}, timeout * 1000);
 }
 
 /**
@@ -493,38 +402,16 @@ function saveData(ev) {
 }
 
 /**
- * Retrieves data from the storage.local.get Promise.
- * It sets up all the things to show the sessions
- *
- * data the data retrieved
- */
-function onGot(data) {
-	console.log(data);
-	if (data.hasOwnProperty("sessions")) {
-		sessions = data.sessions;
-	}
-	sessionIndex = sessions.findIndex((e) => {
-		return e.name == sessionName;
-	});
-	return Promise.resolve(sessions);
-}
-
-/**
- * Print the error on the console
- *
- * error the error occurred
- */
-function onError(error) {
-	console.log(`Error: ${error}`);
-}
-
-/**
  * Creates all the DOM components needed by the page
  */
 function onShow(se) {
 	var nameInput = document.getElementsByName("name")[0];
 	var container = document.getElementById("container")
-	var s = sessions[sessionIndex];
+	var s;
+	sessionIndex = sessions.findIndex((e) => {
+		return e.name == sessionName;
+	});
+	s = sessions[sessionIndex];
 	nameInput.defaultValue = sessionName;
 
 	for (let t of s.tabs) {
